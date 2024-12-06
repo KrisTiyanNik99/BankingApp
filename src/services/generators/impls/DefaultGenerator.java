@@ -1,6 +1,6 @@
 package services.generators.impls;
 
-import configs.info.ConfigurationInfo;
+import configs.ConfigurationInfo;
 import services.generators.CredentialsGenerator;
 
 import java.util.ArrayList;
