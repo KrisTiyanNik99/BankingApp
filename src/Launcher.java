@@ -1,16 +1,4 @@
-import models.Card;
-import models.Transaction;
-import models.User;
-import models.builders.UserBuilder;
-import models.types.CardType;
-import services.generators.CredentialsGenerator;
-import services.generators.impls.DefaultGenerator;
-import views.BankFrame;
-import views.login_view.LoginGui;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.sql.*;
+import main.views.login_view.LoginGui;
 
 public class Launcher {
     public static void main(String[] args) {
