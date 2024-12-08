@@ -2,10 +2,7 @@ package main.views.login_view;
 
 import main.configs.GuiConfiguration;
 import main.views.BankFrame;
-import main.views.components.BankButton;
-import main.views.components.BankCheckBox;
-import main.views.components.BankLabel;
-import main.views.components.BankTextField;
+import main.views.components.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +35,7 @@ public class RegisterGui extends BankFrame {
         BankLabel registerLabel = new BankLabel("Register your account here!");
         registerLabel.setTitleSettings(520,65, 400, 495, Color.CYAN);
 
-        // Add register fields
+        // Add register fields and labels
         BankLabel usernameText = new BankLabel("Username:");
         usernameText.setBankLoginText(50,40, GuiConfiguration.CONTAINER_WIDTH,35);
         registerLabel.add(usernameText);
@@ -51,20 +48,16 @@ public class RegisterGui extends BankFrame {
         passwordText.setBankLoginText(50, 120, GuiConfiguration.CONTAINER_WIDTH, 35);
         registerLabel.add(passwordText);
 
-        JPasswordField passwordField = new JPasswordField();
-        passwordField.setBounds(50,150, GuiConfiguration.CONTAINER_WIDTH, GuiConfiguration.CONTAINER_HEIGHT);
-        passwordField.setFont(new Font("Ariel", Font.BOLD, 20));
-        passwordField.setBackground(Color.WHITE);
+        BankPasswordField passwordField = new BankPasswordField();
+        passwordField.setRegisterSettings(50, 150);
         registerLabel.add(passwordField);
 
         BankLabel rePasswordText = new BankLabel("Repeat Password:");
         rePasswordText.setBankLoginText(50, 200, GuiConfiguration.CONTAINER_WIDTH, 35);
         registerLabel.add(rePasswordText);
 
-        JPasswordField rePasswordField = new JPasswordField();
-        rePasswordField.setBounds(50,230, GuiConfiguration.CONTAINER_WIDTH, GuiConfiguration.CONTAINER_HEIGHT);
-        rePasswordField.setFont(new Font("Ariel", Font.BOLD, 20));
-        rePasswordField.setBackground(Color.WHITE);
+        BankPasswordField rePasswordField = new BankPasswordField();
+        rePasswordField.setRegisterSettings(50,230);
         registerLabel.add(rePasswordField);
 
         // Add checkboxes
