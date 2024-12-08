@@ -19,9 +19,9 @@ public class BankLabel extends JLabel {
         setText(text);
     }
 
-    public void setBackground(int width, int height) {
+    public void setBackground(int width, int height, String imagePath) {
         ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(
-                this.getClass().getResource(GuiConfiguration.BACKGROUND_IMAGE)));
+                this.getClass().getResource(imagePath)));
         setIcon(backgroundImage);
         setLayout(null);
         setSize(width, height);
@@ -33,10 +33,10 @@ public class BankLabel extends JLabel {
         setOpaque(false);
     }
 
-    public void setBankLoginSettings(int x, int y, int width, int height) {
+    public void setTitleSettings(int x, int y, int width, int height, Color color) {
         setBounds(x, y, width, height);
         setLayout(null);
-        setBackground(Color.WHITE);
+        setBackground(color);
         setForeground(Color.BLACK);
         setFont(new Font("Ariel", Font.BOLD, 20));
         setVerticalAlignment(TOP);
@@ -44,9 +44,16 @@ public class BankLabel extends JLabel {
         setOpaque(true);
     }
 
-    public void setBankDescribeSettings(int x, int y, int width, int textSize) {
+    public void setLoginDescribeSettings(int x, int y, int width, int textSize) {
         setBounds(x, y, width, GuiConfiguration.CONTAINER_HEIGHT);
         setForeground(Color.WHITE);
+        setFont(new Font("Ariel", Font.BOLD, textSize));
+        setOpaque(false);
+    }
+
+    public void setRegisterDescribeSettings(int x, int y, int width, int textSize) {
+        setBounds(x, y, width, GuiConfiguration.CONTAINER_HEIGHT);
+        setForeground(Color.BLACK);
         setFont(new Font("Ariel", Font.BOLD, textSize));
         setOpaque(false);
     }

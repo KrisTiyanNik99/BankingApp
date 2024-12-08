@@ -1,4 +1,5 @@
 import main.views.login_view.LoginGui;
+import main.views.login_view.RegisterGui;
 
 public class Launcher {
     public static void main(String[] args) {
@@ -24,7 +25,7 @@ public class Launcher {
 //        user = us.build();
 //        System.out.println(user);
 
-        new LoginGui("Bank").setVisible(true);
+        new RegisterGui("Bank").setVisible(true);
 
 //        try {
 //            Connection connection = DriverManager.getConnection(

@@ -11,4 +11,11 @@ public class BankTextField extends JTextField {
         setForeground(Color.BLACK);
         setBackground(Color.orange);
     }
+
+    public void registerFieldsSettings(int x, int y, int width, int height) {
+        setBounds(x, y, width, height);
+        setFont(new Font("Ariel", Font.BOLD, 20));
+        setForeground(Color.BLACK);
+        setBackground(Color.WHITE);
+    }
 }

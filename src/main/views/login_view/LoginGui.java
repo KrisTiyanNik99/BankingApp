@@ -20,7 +20,7 @@ public class LoginGui extends BankFrame {
     @Override
     protected void addGuiComponents() {
         BankLabel backgroundLabel = new BankLabel();
-        backgroundLabel.setBackground(getWidth(), getHeight());
+        backgroundLabel.setBackground(getWidth(), getHeight(), GuiConfiguration.BACKGROUND_IMAGE);
 
         // Add descriptive panels to the main label to describe the current page
         addDescriptionPanel(backgroundLabel);
@@ -34,7 +34,7 @@ public class LoginGui extends BankFrame {
     //TO-DO: Add functions to the buttons-------------------------------------------------------------------------------
     private void addLoginPanels(JLabel backgroundLabel) {
         BankLabel loginBackground = new BankLabel("Sign in here!");
-        loginBackground.setBankLoginSettings(520,130, 380, 340);
+        loginBackground.setTitleSettings(520,130, 380, 340, Color.WHITE);
 
         BankLabel usernameText = new BankLabel("Username:");
         usernameText.setBankLoginText(GuiConfiguration.xFieldScale,40, GuiConfiguration.CONTAINER_WIDTH,35);
@@ -57,13 +57,13 @@ public class LoginGui extends BankFrame {
         loginBackground.add(password);
 
         BankButton loginButton = new BankButton("Log in!");
-        loginButton.setBankSettings(GuiConfiguration.xFieldScale, 220, GuiConfiguration.CONTAINER_WIDTH,
+        loginButton.setLoginSettings(GuiConfiguration.xFieldScale, 220, GuiConfiguration.CONTAINER_WIDTH,
                 GuiConfiguration.CONTAINER_HEIGHT);
         //TO-DO: Add function to log in button--------------------------------------------------------------------------
         loginBackground.add(loginButton);
 
         BankButton registerButton = new BankButton("Register here!");
-        registerButton.setBankSettings(GuiConfiguration.xFieldScale, 270, GuiConfiguration.CONTAINER_WIDTH,
+        registerButton.setLoginSettings(GuiConfiguration.xFieldScale, 270, GuiConfiguration.CONTAINER_WIDTH,
                 GuiConfiguration.CONTAINER_HEIGHT);
         //TO-DO: Add function to register button------------------------------------------------------------------------
         loginBackground.add(registerButton);
@@ -78,15 +78,15 @@ public class LoginGui extends BankFrame {
 
     private void addDescriptionPanel(JLabel backgroundLabel) {
         BankLabel bankName = new BankLabel("BulgarianInvestBank");
-        bankName.setBankDescribeSettings(GuiConfiguration.xLabelScale, GuiConfiguration.yLabelScale, 220, 21);
+        bankName.setLoginDescribeSettings(GuiConfiguration.xLabelScale, GuiConfiguration.yLabelScale, 220, 21);
         backgroundLabel.add(bankName);
 
         BankLabel currentPage = new BankLabel("You are in Login page");
-        currentPage.setBankDescribeSettings(getWidth() - 280, GuiConfiguration.yLabelScale, 220, 21);
+        currentPage.setLoginDescribeSettings(getWidth() - 280, GuiConfiguration.yLabelScale, 220, 21);
         backgroundLabel.add(currentPage);
 
         BankLabel description = new BankLabel("Banking application made with Swing.");
-        description.setBankDescribeSettings(GuiConfiguration.xLabelScale, 230, 440, 24);
+        description.setLoginDescribeSettings(GuiConfiguration.xLabelScale, 230, 440, 24);
         backgroundLabel.add(description);
 
         // Add contact labels
@@ -99,7 +99,7 @@ public class LoginGui extends BankFrame {
                                       int x, int startPointY, int width) {
         for (String text : displayedText) {
             BankLabel bankLabel = new BankLabel(text);
-            bankLabel.setBankDescribeSettings(x, startPointY, width, GuiConfiguration.TEXT_SIZE);
+            bankLabel.setLoginDescribeSettings(x, startPointY, width, GuiConfiguration.TEXT_SIZE);
             sceneLabel.add(bankLabel);
 
             startPointY += 20;
