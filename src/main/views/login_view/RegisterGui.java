@@ -18,58 +18,35 @@ public class RegisterGui extends BankFrame {
         BankLabel backgroundLabel = new BankLabel();
         backgroundLabel.setBackground(getWidth(), getHeight(), GuiConfiguration.REGISTER_IMAGE);
 
-        BankLabel bankName = new BankLabel("BulgarianInvestBank");
-        bankName.setRegisterDescribeSettings(GuiConfiguration.xLabelScale, GuiConfiguration.yLabelScale, 220, 21);
-        backgroundLabel.add(bankName);
-
-        BankLabel currentPage = new BankLabel("You are in Register page");
-        currentPage.setRegisterDescribeSettings(getWidth() - 290, GuiConfiguration.yLabelScale, 250, 21);
-        backgroundLabel.add(currentPage);
-
+        addDescriptionPanel(backgroundLabel);
         addRegisterComponents(backgroundLabel);
 
         add(backgroundLabel);
     }
 
+    //TO-DO: Add functions to the buttons-------------------------------------------------------------------------------
     private void addRegisterComponents(BankLabel background) {
         BankLabel registerLabel = new BankLabel("Register your account here!");
         registerLabel.setTitleSettings(520,65, 400, 495, Color.CYAN);
 
-        // Add register fields and labels
-        BankLabel usernameText = new BankLabel("Username:");
-        usernameText.setBankLoginText(50,40, GuiConfiguration.CONTAINER_WIDTH,35);
-        registerLabel.add(usernameText);
+        // Add register labels
+        addNavigationLabels(registerLabel);
 
+        // Add register fields
         BankTextField usernameField = new BankTextField();
         usernameField.registerFieldsSettings(50,70, GuiConfiguration.CONTAINER_WIDTH, GuiConfiguration.CONTAINER_HEIGHT);
         registerLabel.add(usernameField);
 
-        BankLabel passwordText = new BankLabel("Password:");
-        passwordText.setBankLoginText(50, 120, GuiConfiguration.CONTAINER_WIDTH, 35);
-        registerLabel.add(passwordText);
-
         BankPasswordField passwordField = new BankPasswordField();
         passwordField.setRegisterSettings(50, 150);
         registerLabel.add(passwordField);
-
-        BankLabel rePasswordText = new BankLabel("Repeat Password:");
-        rePasswordText.setBankLoginText(50, 200, GuiConfiguration.CONTAINER_WIDTH, 35);
-        registerLabel.add(rePasswordText);
 
         BankPasswordField rePasswordField = new BankPasswordField();
         rePasswordField.setRegisterSettings(50,230);
         registerLabel.add(rePasswordField);
 
         // Add checkboxes
-        BankCheckBox passwordVisibility = new BankCheckBox();
-        passwordVisibility.setBounds(360, 150, 40, 40);
-        passwordVisibility.setPasswordVisibility(passwordField);
-        registerLabel.add(passwordVisibility);
-
-        BankCheckBox rePasswordVisibility = new BankCheckBox();
-        rePasswordVisibility.setBounds(360, 230, 40,40);
-        rePasswordVisibility.setPasswordVisibility(rePasswordField);
-        registerLabel.add(rePasswordVisibility);
+        addCheckboxes(registerLabel, passwordField, rePasswordField);
 
         // Add buttons
         BankButton registerButton = new BankButton("Create Account!");
@@ -93,5 +70,41 @@ public class RegisterGui extends BankFrame {
         registerLabel.add(suggestPasswordButton);
 
         background.add(registerLabel);
+    }
+
+    private void addNavigationLabels(JLabel registerLabel) {
+        BankLabel username = new BankLabel("Username:");
+        username.setBankLoginText(50,40, GuiConfiguration.CONTAINER_WIDTH,35);
+        registerLabel.add(username);
+
+        BankLabel password = new BankLabel("Password:");
+        password.setBankLoginText(50, 120, GuiConfiguration.CONTAINER_WIDTH, 35);
+        registerLabel.add(password);
+
+        BankLabel rePassword = new BankLabel("Repeat Password:");
+        rePassword.setBankLoginText(50, 200, GuiConfiguration.CONTAINER_WIDTH, 35);
+        registerLabel.add(rePassword);
+    }
+
+    private void addDescriptionPanel(BankLabel backgroundLabel) {
+        BankLabel bankName = new BankLabel("BulgarianInvestBank");
+        bankName.setRegisterDescribeSettings(GuiConfiguration.xLabelScale, GuiConfiguration.yLabelScale, 220, 21);
+        backgroundLabel.add(bankName);
+
+        BankLabel currentPage = new BankLabel("You are in Register page");
+        currentPage.setRegisterDescribeSettings(getWidth() - 290, GuiConfiguration.yLabelScale, 250, 21);
+        backgroundLabel.add(currentPage);
+    }
+
+    private void addCheckboxes(JLabel registerLabel, JPasswordField passwordField, JPasswordField rePasswordField) {
+        BankCheckBox passwordVisibility = new BankCheckBox();
+        passwordVisibility.setBounds(360, 150, 40, 40);
+        passwordVisibility.setPasswordVisibility(passwordField);
+        registerLabel.add(passwordVisibility);
+
+        BankCheckBox rePasswordVisibility = new BankCheckBox();
+        rePasswordVisibility.setBounds(360, 230, 40,40);
+        rePasswordVisibility.setPasswordVisibility(rePasswordField);
+        registerLabel.add(rePasswordVisibility);
     }
 }

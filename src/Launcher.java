@@ -25,7 +25,7 @@ public class Launcher {
 //        user = us.build();
 //        System.out.println(user);
 
-        new RegisterGui("Bank").setVisible(true);
+        new LoginGui("Bank").setVisible(true);
 
 //        try {
 //            Connection connection = DriverManager.getConnection(

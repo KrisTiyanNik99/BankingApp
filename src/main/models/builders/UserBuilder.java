@@ -94,7 +94,7 @@ public class UserBuilder {
     }
 
     private List<Transaction> checkForTransactions(List<Transaction> transactions) {
-        if (transactions == null || transactions.size() <= 0) {
+        if (transactions == null) {
             transactions = new ArrayList<>();
         }
 
@@ -102,7 +102,7 @@ public class UserBuilder {
     }
 
     private List<Card> checkForCard(List<Card> cards) {
-        if (cards == null || cards.size() <= 0) {
+        if (cards == null) {
             cards = new ArrayList<>();
         }
 

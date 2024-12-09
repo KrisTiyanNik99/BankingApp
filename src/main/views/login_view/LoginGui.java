@@ -26,13 +26,13 @@ public class LoginGui extends BankFrame {
         addDescriptionPanel(backgroundLabel);
 
         // Add login components to the main label
-        addLoginPanels(backgroundLabel);
+        addLoginComponents(backgroundLabel);
 
         add(backgroundLabel);
     }
 
     //TO-DO: Add functions to the buttons-------------------------------------------------------------------------------
-    private void addLoginPanels(JLabel backgroundLabel) {
+    private void addLoginComponents(JLabel backgroundLabel) {
         BankLabel loginBackground = new BankLabel("Sign in here!");
         loginBackground.setTitleSettings(520,130, 380, 340, Color.WHITE);
 

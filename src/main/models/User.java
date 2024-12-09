@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class User {
-    private int id;
+    private final int id;
     private String username, password, email;
     private BigDecimal balance;
     private List<Transaction> transactions;
