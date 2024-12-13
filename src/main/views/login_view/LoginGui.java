@@ -37,7 +37,7 @@ public class LoginGui extends BankFrame {
         loginBackground.setTitleSettings(520,130, 380, 340, Color.WHITE);
 
         BankLabel usernameText = new BankLabel("Username:");
-        usernameText.setBankLoginText(GuiConfiguration.xFieldScale,40, GuiConfiguration.CONTAINER_WIDTH,35);
+        usernameText.setLoginTextSettings(GuiConfiguration.xFieldScale,40, GuiConfiguration.CONTAINER_WIDTH,35);
         loginBackground.add(usernameText);
 
         BankTextField username = new BankTextField();
@@ -46,7 +46,7 @@ public class LoginGui extends BankFrame {
         loginBackground.add(username);
 
         BankLabel passwordText = new BankLabel("Password:");
-        passwordText.setBankLoginText(GuiConfiguration.xFieldScale, 120, GuiConfiguration.CONTAINER_WIDTH, 35);
+        passwordText.setLoginTextSettings(GuiConfiguration.xFieldScale, 120, GuiConfiguration.CONTAINER_WIDTH, 35);
         loginBackground.add(passwordText);
 
         JPasswordField password = new JPasswordField();
@@ -78,11 +78,11 @@ public class LoginGui extends BankFrame {
 
     private void addDescriptionPanel(JLabel backgroundLabel) {
         BankLabel bankName = new BankLabel("BulgarianInvestBank");
-        bankName.setLoginDescribeSettings(GuiConfiguration.xLabelScale, GuiConfiguration.yLabelScale, 220, 21);
+        bankName.setLoginDescribeSettings(GuiConfiguration.xLabelScale, GuiConfiguration.LABEL_SCALE, 220, 21);
         backgroundLabel.add(bankName);
 
         BankLabel currentPage = new BankLabel("You are in Login page");
-        currentPage.setLoginDescribeSettings(getWidth() - 280, GuiConfiguration.yLabelScale, 220, 21);
+        currentPage.setLoginDescribeSettings(getWidth() - 280, GuiConfiguration.LABEL_SCALE, 220, 21);
         backgroundLabel.add(currentPage);
 
         BankLabel description = new BankLabel("Banking application made with Swing.");

@@ -21,6 +21,10 @@ public class User {
         this.cards = cards;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     @Override
     public String toString() {
         return "User{" +

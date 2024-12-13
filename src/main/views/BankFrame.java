@@ -17,8 +17,8 @@ public abstract class BankFrame extends JFrame {
     }
 
     public BankFrame(String title, User user) {
-        this(title);
         this.user = user;
+        initFrame(title);
     }
 
     private void initFrame(String title) {

@@ -74,25 +74,25 @@ public class RegisterGui extends BankFrame {
 
     private void addNavigationLabels(JLabel registerLabel) {
         BankLabel username = new BankLabel("Username:");
-        username.setBankLoginText(50,40, GuiConfiguration.CONTAINER_WIDTH,35);
+        username.setLoginTextSettings(50,40, GuiConfiguration.CONTAINER_WIDTH,35);
         registerLabel.add(username);
 
         BankLabel password = new BankLabel("Password:");
-        password.setBankLoginText(50, 120, GuiConfiguration.CONTAINER_WIDTH, 35);
+        password.setLoginTextSettings(50, 120, GuiConfiguration.CONTAINER_WIDTH, 35);
         registerLabel.add(password);
 
         BankLabel rePassword = new BankLabel("Repeat Password:");
-        rePassword.setBankLoginText(50, 200, GuiConfiguration.CONTAINER_WIDTH, 35);
+        rePassword.setLoginTextSettings(50, 200, GuiConfiguration.CONTAINER_WIDTH, 35);
         registerLabel.add(rePassword);
     }
 
     private void addDescriptionPanel(BankLabel backgroundLabel) {
         BankLabel bankName = new BankLabel("BulgarianInvestBank");
-        bankName.setRegisterDescribeSettings(GuiConfiguration.xLabelScale, GuiConfiguration.yLabelScale, 220, 21);
+        bankName.setRegisterDescribeSettings(GuiConfiguration.xLabelScale, GuiConfiguration.LABEL_SCALE, 220, 21);
         backgroundLabel.add(bankName);
 
         BankLabel currentPage = new BankLabel("You are in Register page");
-        currentPage.setRegisterDescribeSettings(getWidth() - 290, GuiConfiguration.yLabelScale, 250, 21);
+        currentPage.setRegisterDescribeSettings(getWidth() - 290, GuiConfiguration.LABEL_SCALE, 250, 21);
         backgroundLabel.add(currentPage);
     }
 

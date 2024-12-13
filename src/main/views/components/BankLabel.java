@@ -27,7 +27,7 @@ public class BankLabel extends JLabel {
         setSize(width, height);
     }
 
-    public void setBankLoginText(int x, int y, int width, int height) {
+    public void setLoginTextSettings(int x, int y, int width, int height) {
         setBounds(x, y, width, height);
         setFont(new Font("Ariel", Font.BOLD, 20));
         setOpaque(false);
