@@ -18,7 +18,7 @@ public class RegisterGui extends BankFrame {
         BankLabel backgroundLabel = new BankLabel();
         backgroundLabel.setBackground(getWidth(), getHeight(), GuiConfiguration.REGISTER_IMAGE);
 
-        addDescriptionPanel(backgroundLabel);
+        addDescriptionPanels(backgroundLabel);
         addRegisterComponents(backgroundLabel);
 
         add(backgroundLabel);
@@ -86,7 +86,7 @@ public class RegisterGui extends BankFrame {
         registerLabel.add(rePassword);
     }
 
-    private void addDescriptionPanel(BankLabel backgroundLabel) {
+    private void addDescriptionPanels(BankLabel backgroundLabel) {
         BankLabel bankName = new BankLabel("BulgarianInvestBank");
         bankName.setRegisterDescribeSettings(GuiConfiguration.xLabelScale, GuiConfiguration.LABEL_SCALE, 220, 21);
         backgroundLabel.add(bankName);

@@ -15,14 +15,12 @@ public class DefaultGenerator implements CredentialsGenerator {
 
     @Override
     public String generateUsername() {
-        String username = createRandomString(ConfigurationInfo.DEFAULT_LENGTH, false);
-        return username;
+        return createRandomString(ConfigurationInfo.DEFAULT_LENGTH, false);
     }
 
     @Override
     public String generatePassword() {
-        String username = createRandomString(ConfigurationInfo.DEFAULT_LENGTH, true);
-        return username;
+        return createRandomString(ConfigurationInfo.DEFAULT_LENGTH, true);
     }
 
     private String createRandomString(int length, boolean isPassword) {
@@ -32,11 +30,10 @@ public class DefaultGenerator implements CredentialsGenerator {
         }
 
         StringBuilder sb = new StringBuilder();
-        Random random = new Random();
 
         List<Integer> usedNumbers = new ArrayList<>();
         for (int i = 0; i < length; i++) {
-            int index = getUnusedIndex(credential, random, usedNumbers);
+            int index = getUnusedIndex(credential.length(), usedNumbers);
             usedNumbers.add(index);
             sb.append(credential.charAt(index));
         }
@@ -44,15 +41,17 @@ public class DefaultGenerator implements CredentialsGenerator {
         return sb.toString();
     }
 
-    private int getUnusedIndex(String credential, Random random, List<Integer> usedNumber) {
+    private int getUnusedIndex(int credential, List<Integer> usedNumber) {
         /*
-        * We create a separate method that will monitor if we already have the given symbol and if we have it will
-        * generate a new one based on the indices. We do it this way because we want passwords or usernames to be
-        * unique, without repeating characters.
+            We create a separate method that will monitor if we already have the given symbol and if we have it will
+            generate a new one based on the indices. We do it this way because we want passwords or usernames to be
+            unique, without repeating characters.
         */
-        int number = random.nextInt(credential.length());
+
+        Random random = new Random();
+        int number = random.nextInt(credential);
         while (usedNumber.contains(number)) {
-            number = random.nextInt(credential.length());
+            number = random.nextInt(credential);
         }
 
         return number;

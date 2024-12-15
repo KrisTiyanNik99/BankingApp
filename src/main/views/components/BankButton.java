@@ -3,14 +3,30 @@ package main.views.components;
 import main.configs.GuiConfiguration;
 import main.services.generators.CredentialsGenerator;
 import main.services.generators.impls.DefaultGenerator;
+import main.views.menu_view.menu_option.dialogs.BankDialog;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class BankButton extends JButton {
 
+    public BankButton() {
+        setFocusPainted(false);
+    }
+
     public BankButton(String text) {
+        this();
         setText(text);
+    }
+
+    public void setIcon(String imageUrl, int width, int height) {
+        ImageIcon icon = new ImageIcon(imageUrl);
+
+        // Parse ImageIcon to Image and resize the png file
+        Image resizedIcon = icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        ImageIcon editedIcon = new ImageIcon(resizedIcon);
+
+        setIcon(editedIcon);
     }
 
     public void setLoginSettings(int x, int y, int width, int height) {
@@ -18,7 +34,6 @@ public class BankButton extends JButton {
         setFont(new Font("Ariel", Font.BOLD, 25));
         setBackground(Color.blue);
         setForeground(Color.WHITE);
-        setFocusPainted(false);
     }
 
     public void setRegisterSettings(int x, int y, int width, int height) {
@@ -26,7 +41,6 @@ public class BankButton extends JButton {
         setFont(new Font("Ariel", Font.BOLD, 25));
         setBackground(Color.GREEN);
         setForeground(Color.WHITE);
-        setFocusPainted(false);
     }
 
     public void setSideBarMenuSettings(String imageUrl, int x, int y, int width, int height) {
@@ -35,9 +49,12 @@ public class BankButton extends JButton {
         setBackground(Color.blue);
         setForeground(Color.WHITE);
         setBorderPainted(false);
-        setFocusPainted(false);
         setHorizontalAlignment(SwingConstants.LEFT);
-        setIcon(imageUrl, height);
+        setIcon(imageUrl, 40, height);
+    }
+
+    public void setDialog(BankDialog service) {
+        this.addActionListener(e -> service.setVisible(true));
     }
 
     public void suggestUsernameAction(JTextField username) {
@@ -53,15 +70,5 @@ public class BankButton extends JButton {
             password.setText(generatedPassword);
             rePassword.setText(generatedPassword);
         });
-    }
-
-    private void setIcon(String imageUrl, int height) {
-        ImageIcon icon = new ImageIcon(imageUrl);
-
-        // Parse ImageIcon to Image and resize the png file
-        Image resizedIcon = icon.getImage().getScaledInstance(40, height, Image.SCALE_DEFAULT);
-        ImageIcon editedIcon = new ImageIcon(resizedIcon);
-
-        setIcon(editedIcon);
     }
 }

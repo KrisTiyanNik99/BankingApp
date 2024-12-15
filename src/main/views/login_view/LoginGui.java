@@ -23,7 +23,7 @@ public class LoginGui extends BankFrame {
         backgroundLabel.setBackground(getWidth(), getHeight(), GuiConfiguration.BACKGROUND_IMAGE);
 
         // Add descriptive panels to the main label to describe the current page
-        addDescriptionPanel(backgroundLabel);
+        addDescriptionPanels(backgroundLabel);
 
         // Add login components to the main label
         addLoginComponents(backgroundLabel);
@@ -76,7 +76,7 @@ public class LoginGui extends BankFrame {
         backgroundLabel.add(loginBackground);
     }
 
-    private void addDescriptionPanel(JLabel backgroundLabel) {
+    private void addDescriptionPanels(JLabel backgroundLabel) {
         BankLabel bankName = new BankLabel("BulgarianInvestBank");
         bankName.setLoginDescribeSettings(GuiConfiguration.xLabelScale, GuiConfiguration.LABEL_SCALE, 220, 21);
         backgroundLabel.add(bankName);

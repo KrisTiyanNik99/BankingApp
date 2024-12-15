@@ -13,7 +13,8 @@ import java.util.Objects;
  */
 public class BankLabel extends JLabel {
 
-    public BankLabel(){}
+    public BankLabel() {
+    }
 
     public BankLabel(String text) {
         setText(text);
@@ -25,6 +26,16 @@ public class BankLabel extends JLabel {
         setIcon(backgroundImage);
         setLayout(null);
         setSize(width, height);
+    }
+
+    public void setResizedBackground(int width, int height, String imagePath) {
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(
+                this.getClass().getResource(imagePath)));
+
+        Image resizedIcon = icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        ImageIcon editedIcon = new ImageIcon(resizedIcon);
+
+        setIcon(editedIcon);
     }
 
     public void setLoginTextSettings(int x, int y, int width, int height) {
@@ -56,5 +67,12 @@ public class BankLabel extends JLabel {
         setForeground(Color.BLACK);
         setFont(new Font("Ariel", Font.BOLD, textSize));
         setOpaque(false);
+    }
+
+    public void setMenuOptionSettings(int x, int y, int width, int height) {
+        setBackground(Color.CYAN);
+        setOpaque(true);
+        setLayout(null);
+        setBounds(x, y, width, height);
     }
 }
