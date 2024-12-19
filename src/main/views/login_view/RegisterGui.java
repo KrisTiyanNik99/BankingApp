@@ -16,7 +16,7 @@ public class RegisterGui extends BankFrame {
     @Override
     protected void addGuiComponents() {
         BankLabel backgroundLabel = new BankLabel();
-        backgroundLabel.setBackground(getWidth(), getHeight(), GuiConfiguration.REGISTER_IMAGE);
+        backgroundLabel.setBackgroundImage(getWidth(), getHeight(), GuiConfiguration.REGISTER_IMAGE);
 
         addDescriptionPanels(backgroundLabel);
         addRegisterComponents(backgroundLabel);

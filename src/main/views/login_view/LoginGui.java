@@ -20,7 +20,7 @@ public class LoginGui extends BankFrame {
     @Override
     protected void addGuiComponents() {
         BankLabel backgroundLabel = new BankLabel();
-        backgroundLabel.setBackground(getWidth(), getHeight(), GuiConfiguration.BACKGROUND_IMAGE);
+        backgroundLabel.setBackgroundImage(getWidth(), getHeight(), GuiConfiguration.BACKGROUND_IMAGE);
 
         // Add descriptive panels to the main label to describe the current page
         addDescriptionPanels(backgroundLabel);

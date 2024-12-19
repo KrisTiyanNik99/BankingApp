@@ -3,6 +3,7 @@ package main.views.menu_view.menu_option;
 import main.configs.GuiConfiguration;
 import main.views.components.BankButton;
 import main.views.components.BankLabel;
+import main.views.menu_view.menu_option.dialogs.CurrencyDialog;
 import main.views.menu_view.menu_option.dialogs.WeatherDialog;
 
 public class HomePageGui extends OptionGui {
@@ -60,13 +61,11 @@ public class HomePageGui extends OptionGui {
         add(toDoButton);
     }
 
-    //TO-DO: Add click function-----------------------------------------------------------------------------------------
     private void addCurrencyComponents() {
         BankButton currencyButton = new BankButton();
         currencyButton.setBounds(345, 110, 260, 180);
         currencyButton.setIcon(GuiConfiguration.CURRENCY_ICON, 260, 180);
-
-        //TO-DO: Add click function to currency board-------------------------------------------------------------------
+        currencyButton.setDialog(new CurrencyDialog("Currency", this));
 
         add(currencyButton);
     }

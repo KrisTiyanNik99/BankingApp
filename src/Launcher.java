@@ -16,45 +16,38 @@ import org.json.simple.parser.ParseException;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class Launcher {
     public static void main(String[] args) {
-//        UserBuilder us = new UserBuilder(1, "Kikosadsafd", "password")
-//                .setEmail("kiko@abv.bg")
-//                .setBalance(BigDecimal.valueOf(123.45));
-//
-//        User user;
-//
-//        Card card1 = new Card(1, 1, "8808 1568 6743", CardType.parseCardType("ViSa"));
-//        Card card2 = new Card(2, 1, "8808 1518 6743", CardType.parseCardType("Master"));
-//
-//        Transaction transaction = new Transaction(1, 1 , card1.getCardNumber(), "deposit",
-//                BigDecimal.valueOf(23.43), new Date(12));
-//
-//        us.setPassword("grosspass")
-//                .addElement(card1)
-//                .addElement(card2)
-//                .addElement(transaction)
-//                .setId(1);
-//
-//        user = us.build();
-//        System.out.println(user);
-        JSONParser parser = new JSONParser();
-        try {
-            String str = new GeocodingApi("Berlin").getData();
-            JSONArray arr = (JSONArray) parser.parse(str);
-            JSONObject obj = (JSONObject) arr.get(0);
+        UserBuilder us = new UserBuilder(1, "Kikosadsafd", "password")
+                .setEmail("kiko@abv.bg")
+                .setBalance(BigDecimal.valueOf(123.45));
 
-            double latitude =(double) obj.get("latitude");
-            double longitude = (double) obj.get("longitude");
+        User user;
 
-            System.out.println(new WeatherApi(latitude, longitude).getData());
+        Card card1 = new Card(1, 1, "8808 1568 6743", CardType.parseCardType("ViSa"));
+        Card card2 = new Card(2, 1, "8808 1518 6743", CardType.parseCardType("Master"));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Transaction transaction = new Transaction(1, 1 , card1.getCardNumber(), "deposit",
+                BigDecimal.valueOf(23.43), new Date(12));
 
-        //new MenuGui("Bank", user).setVisible(true);
+        us.setPassword("grosspass")
+                .addElement(card1)
+                .addElement(card2)
+                .addElement(transaction)
+                .setId(1);
+
+        user = us.build();
+        //System.out.println(user);
+
+        //Set<Map<String, Object>> elements;
+        //elements = Set.of(Map.of("da", 37, "ne", 39,"neu", 38, "Da", 39));
+        //System.out.println(elements);
+
+        new MenuGui("Bank", user).setVisible(true);
 
 //        try {
 //            Connection connection = DriverManager.getConnection(

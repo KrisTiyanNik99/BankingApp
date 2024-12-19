@@ -1,9 +1,12 @@
 package main.views.components;
 
-import main.configs.GuiConfiguration;
+import main.configs.ApiConfiguration;
+import main.models.types.WeatherCode;
 import main.services.generators.CredentialsGenerator;
 import main.services.generators.impls.DefaultGenerator;
+import main.services.mapper.ApiDecoder;
 import main.views.menu_view.menu_option.dialogs.BankDialog;
+import org.json.simple.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -69,6 +72,29 @@ public class BankButton extends JButton {
             String generatedPassword = new DefaultGenerator().generatePassword();
             password.setText(generatedPassword);
             rePassword.setText(generatedPassword);
+        });
+    }
+
+    public void getWeather(JTextField search, BankLabel weatherCondition, JLabel weatherConditionText, JLabel temperature,
+                           JLabel humidityText, JLabel windSpeedText) {
+        this.addActionListener(e -> {
+            String city = search.getText();
+            JSONObject weatherDataObject = ApiDecoder.extractWeatherData(city);
+
+            WeatherCode weatherCode = WeatherCode.parseWeatherCode(weatherDataObject
+                    .get(ApiConfiguration.WEATHER_CONDITION).toString());
+
+            weatherCondition.setResizedBackground(450,217, weatherCode.getWeatherImageUrl());
+            weatherConditionText.setText(weatherDataObject.get(ApiConfiguration.WEATHER_CONDITION).toString());
+
+            String temp = weatherDataObject.get(ApiConfiguration.TEMPERATURE).toString();
+            temperature.setText(temp + " C");
+
+            String humidity = weatherDataObject.get(ApiConfiguration.HUMIDITY).toString();
+            humidityText.setText("<html><b>Humidity</b> " + humidity + "%</html>");
+
+            String windSpeed = weatherDataObject.get(ApiConfiguration.WIND_SPEED).toString();
+            windSpeedText.setText("<html><b>Wind Speed</b> " + windSpeed + "km/h</html>");
         });
     }
 }

@@ -20,7 +20,7 @@ public class BankLabel extends JLabel {
         setText(text);
     }
 
-    public void setBackground(int width, int height, String imagePath) {
+    public void setBackgroundImage(int width, int height, String imagePath) {
         ImageIcon backgroundImage = new ImageIcon(Objects.requireNonNull(
                 this.getClass().getResource(imagePath)));
         setIcon(backgroundImage);
