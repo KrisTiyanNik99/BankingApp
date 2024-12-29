@@ -116,6 +116,8 @@ public class WeatherApi implements APIService {
             result = WeatherCode.CLEAR.getWeather();
         } else if (code > 0L && code <= 3L) {
             result = WeatherCode.CLOUDY.getWeather();
+        } else if (code > 3L && code <= 50){
+            result = WeatherCode.FOG.getWeather();
         } else if ((code >= 51L && code <= 67L) ||
                 (code >= 89L && code <= 99L)) {
             result = WeatherCode.RAIN.getWeather();

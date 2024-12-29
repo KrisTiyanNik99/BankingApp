@@ -10,6 +10,6 @@ public class CurrencyDialog extends BankDialog {
 
     @Override
     protected void addSpecificGui() {
-
+        
     }
 }
