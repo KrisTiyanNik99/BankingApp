@@ -28,6 +28,7 @@ public interface GuiConfiguration {
     String SNOW_ICON ="/weather_icon/snow.png";
     String FOG_ICON = "/weather_icon/fog_icon.png";
 
+    // Url tags
     String FORGOTTEN_PASSWORD = "<html><a href=\"#\">Forgotten password?</a></html>";
 
     // Specific colors for GUI's
