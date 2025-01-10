@@ -13,6 +13,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
+/*
+* GeocodingApi is responsible for retrieving geocoding data from an external API.
+* It extends the AbstractApiHandler class to inherit common API handling functionality.
+*/
 public class GeocodingApi implements APIService {
     private final String city;
 
@@ -20,6 +24,11 @@ public class GeocodingApi implements APIService {
         this.city = city;
     }
 
+    /**
+     * Fetches the API response for geocoding based on the city name.
+     * @param city The city name for which geocoding data is fetched.
+     * @return HttpURLConnection instance if successful, otherwise null.
+     */
     @Override
     public HttpURLConnection fetchApiResponse(String city) {
         String urlString = ApiConfigurationManager.getInstance().getGeoCodingApi(city);
@@ -39,6 +48,11 @@ public class GeocodingApi implements APIService {
         return null;
     }
 
+    /**
+     * Handles the API response and parses it into a JSON object.
+     * @param connection The HttpURLConnection instance representing the API response.
+     * @return A parsed JSONObject containing geocoding data, or null in case of an error.
+     */
     @Override
     public JSONObject handleResponse(HttpURLConnection connection) {
         try {
@@ -65,11 +79,21 @@ public class GeocodingApi implements APIService {
         return null;
     }
 
+    /**
+     * Retrieves an array from a JSONObject based on a specified keyword.
+     * @param jsonObject The JSONObject to search.
+     * @param keyword The key whose value is the desired array.
+     * @return JSONArray corresponding to the keyword.
+     */
     @Override
     public JSONArray getArray(JSONObject jsonObject, String keyword) {
         return (JSONArray) jsonObject.get(keyword);
     }
 
+    /**
+     * Retrieves geocoding data for the city in string format.
+     * @return A string representation of the geocoding data.
+     */
     @Override
     public String getData() {
         HttpURLConnection connection = fetchApiResponse(city);

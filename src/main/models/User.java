@@ -25,6 +25,10 @@ public class User {
         return username;
     }
 
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
     @Override
     public String toString() {
         return "User{" +

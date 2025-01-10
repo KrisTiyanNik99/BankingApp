@@ -64,7 +64,7 @@ public class MenuGui extends BankFrame {
     }
 
     private void addHomePage(JLabel mainBackground) {
-        OptionGui homePage = new HomePageGui(0, 0, mainBackground.getWidth(), mainBackground.getHeight());
+        OptionGui homePage = new HomePageGui(0, 0, mainBackground.getWidth(), mainBackground.getHeight(), getUser());
         mainBackground.add(homePage);
     }
 }

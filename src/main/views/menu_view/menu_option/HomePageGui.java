@@ -1,17 +1,35 @@
 package main.views.menu_view.menu_option;
 
 import main.configs.GuiConfiguration;
+import main.models.User;
 import main.views.components.BankButton;
 import main.views.components.BankLabel;
 import main.views.menu_view.menu_option.dialogs.CurrencyDialog;
 import main.views.menu_view.menu_option.dialogs.WeatherDialog;
 
+/*
+* HomePageGui is a graphical interface that provides an interactive home page
+* with components for weather, currency, to-do list, and events calendar functionality.
+* It extends the abstract OptionGui class to define its specific layout and behavior.
+*/
 public class HomePageGui extends OptionGui {
 
-    public HomePageGui(int x, int y, int width, int height) {
-        super(x, y, width, height);
+    /**
+     * Constructs the HomePageGui with specified dimensions and position.
+     *
+     * @param x       The x-coordinate for the GUI.
+     * @param y       The y-coordinate for the GUI.
+     * @param width   The width of the GUI.
+     * @param height  The height of the GUI.
+     */
+    public HomePageGui(int x, int y, int width, int height, User user) {
+        super(x, y, width, height, user);
     }
 
+    /**
+     * Adds the specific components required for the home page, including descriptive labels
+     * and interactive buttons for weather, currency, to-do, and calendar functionalities.
+     */
     @Override
     protected void addSpecificComponents() {
         addDescriptiveLabels();
@@ -21,6 +39,7 @@ public class HomePageGui extends OptionGui {
         addEventsCalendarComponents();
     }
 
+    // Adds descriptive labels to guide the user for each functionality on the home page.
     private void addDescriptiveLabels() {
         BankLabel weatherLabel = new BankLabel("Check the weather today");
         weatherLabel.setRegisterDescribeSettings(65, 75, 260, GuiConfiguration.TEXT_SIZE + 5);
@@ -61,15 +80,18 @@ public class HomePageGui extends OptionGui {
         add(toDoButton);
     }
 
+    // Adds the currency exchange components, including an interactive button that opens the CurrencyDialog.
     private void addCurrencyComponents() {
         BankButton currencyButton = new BankButton();
         currencyButton.setBounds(345, 110, 260, 180);
-        currencyButton.setIcon(GuiConfiguration.CURRENCY_ICON, 260, 180);
-        currencyButton.setDialog(new CurrencyDialog("Currency", this));
+        currencyButton.setIcon(GuiConfiguration.MONEY_ICON, 260, 180);
+        currencyButton.setDialog(new CurrencyDialog("Currency", this,
+                getUser().getUsername(), getUser().getBalance()));
 
         add(currencyButton);
     }
 
+    // Adds the weather components, including an interactive button that opens the WeatherDialog.
     private void addWeatherComponents() {
         BankButton weatherButton = new BankButton();
         weatherButton.setBounds(55, 110, 260, 180);
