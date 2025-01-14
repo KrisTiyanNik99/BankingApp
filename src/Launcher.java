@@ -4,6 +4,7 @@ import main.models.Transaction;
 import main.models.User;
 import main.models.builders.UserBuilder;
 import main.models.types.CardType;
+import main.services.api.impl.CurrencyApi;
 import main.services.api.impl.GeocodingApi;
 import main.services.api.impl.WeatherApi;
 import main.views.login_view.LoginGui;
@@ -16,9 +17,6 @@ import org.json.simple.parser.ParseException;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class Launcher {
     public static void main(String[] args) {
@@ -41,13 +39,10 @@ public class Launcher {
                 .setId(1);
 
         user = us.build();
-        //System.out.println(user);
-
-        //Set<Map<String, Object>> elements;
-        //elements = Set.of(Map.of("da", 37, "ne", 39,"neu", 38, "Da", 39));
-        //System.out.println(elements);
 
         new MenuGui("Bank", user).setVisible(true);
+//        CurrencyApi ap = new CurrencyApi();
+//        ap.getData();
 
 //        try {
 //            Connection connection = DriverManager.getConnection(
