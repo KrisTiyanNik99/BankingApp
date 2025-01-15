@@ -57,12 +57,12 @@ public class ApiConfigurationManager {
         return weatherUrl;
     }
 
-    public String getCurrencyCoursesUrl(String currencyOne, String currencyTwo) {
-        String currencyCourseUrl = ApiConfiguration.CURRENCY_COURSE_API;
-
-        currencyCourseUrl = currencyCourseUrl.replace(ApiConfiguration.CURRENCY_EXCHANGE, currencyOne);
-        currencyCourseUrl = currencyCourseUrl.replace(ApiConfiguration.CURRENCY_TRANSFER, currencyTwo);
-
-        return currencyCourseUrl;
-    }
+//    public String getCurrencyCoursesUrl(String currencyOne, String currencyTwo) {
+//        String currencyCourseUrl = ApiConfiguration.CURRENCY_COURSE_API;
+//
+//        currencyCourseUrl = currencyCourseUrl.replace(ApiConfiguration.CURRENCY_EXCHANGE, currencyOne);
+//        currencyCourseUrl = currencyCourseUrl.replace(ApiConfiguration.CURRENCY_TRANSFER, currencyTwo);
+//
+//        return currencyCourseUrl;
+//    }
 }

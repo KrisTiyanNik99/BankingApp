@@ -53,4 +53,8 @@ public interface GuiConfiguration {
     // Label and field position adjustments
     int xLabelScale = 45;        // Horizontal position adjustment for labels
     int xFieldScale = 40;        // Horizontal position adjustment for fields
+
+    // To-do components
+    int TO_DO_CONTAINER_WIDTH = 420;     // Default width for to-do components
+    int TO_DO_CONTAINER_HEIGHT = 50;     // Default height for to-do components
 }

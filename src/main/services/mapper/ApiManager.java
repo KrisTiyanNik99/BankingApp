@@ -3,7 +3,6 @@ package main.services.mapper;
 import main.configs.ApiConfiguration;
 import main.services.api.APIService;
 import main.services.api.config.ApiConfigurationManager;
-import main.services.api.impl.CurrencyApi;
 import main.services.api.impl.GeocodingApi;
 import main.services.api.impl.WeatherApi;
 import org.json.simple.JSONArray;
@@ -41,29 +40,5 @@ public class ApiManager {
         new JOptionPane("Cannot connect correctly to the internet!", JOptionPane.ERROR_MESSAGE);
 
         return null;
-    }
-
-    public static void setCurrencyOptions(JComboBox<String> options) {
-        String[] currency = new CurrencyApi().getData().split(",");
-        for (int i = 0; i < currency.length; i++) {
-            if (i % 2 == 0) {
-                options.addItem(currency[i]);
-            }
-        }
-    }
-
-    public static String getConversionRate(String currencyRateOne, String currencyRateTwo) {
-        String url = ApiConfigurationManager.getInstance().getCurrencyCoursesUrl(currencyRateOne, currencyRateTwo);
-
-        APIService currencyService = new CurrencyApi();
-        JSONObject jsonObject = currencyService.handleResponse(currencyService.fetchApiResponse(url));
-
-        String[] rateValue = jsonObject.get(ApiConfiguration.CURRENCY_RATE_KEYWORD).toString()
-                .replaceAll("\\{", "")
-                .replaceAll("\\}", "")
-                .split(":");
-
-        System.out.println(rateValue[1]);
-        return rateValue[1];
     }
 }

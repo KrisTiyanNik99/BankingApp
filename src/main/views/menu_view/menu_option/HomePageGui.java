@@ -4,7 +4,7 @@ import main.configs.GuiConfiguration;
 import main.models.User;
 import main.views.components.BankButton;
 import main.views.components.BankLabel;
-import main.views.menu_view.menu_option.dialogs.CurrencyDialog;
+import main.views.menu_view.menu_option.dialogs.ToDoDialog;
 import main.views.menu_view.menu_option.dialogs.WeatherDialog;
 
 /*
@@ -33,7 +33,7 @@ public class HomePageGui extends OptionGui {
     @Override
     protected void addSpecificComponents() {
         addDescriptiveLabels();
-        addCurrencyComponents();
+//        addCurrencyComponents();
         addWeatherComponents();
         addToDoComponents();
         addEventsCalendarComponents();
@@ -69,27 +69,26 @@ public class HomePageGui extends OptionGui {
         add(calendarButton);
     }
 
-    //TO-DO: Add click function-----------------------------------------------------------------------------------------
+    // Adds the TO-DO list in the main home page with username and specific icon.
     private void addToDoComponents() {
         BankButton toDoButton = new BankButton();
         toDoButton.setBounds(55, 310, 260, 180);
         toDoButton.setIcon(GuiConfiguration.TO_DO_ICON, 260, 180);
-
-        //TO-DO: Add click function to custom to-do board---------------------------------------------------------------
+        toDoButton.setDialog(new ToDoDialog("TO-DO List", this, getUser().getUsername()));
 
         add(toDoButton);
     }
 
     // Adds the currency exchange components, including an interactive button that opens the CurrencyDialog.
-    private void addCurrencyComponents() {
-        BankButton currencyButton = new BankButton();
-        currencyButton.setBounds(345, 110, 260, 180);
-        currencyButton.setIcon(GuiConfiguration.MONEY_ICON, 260, 180);
-        currencyButton.setDialog(new CurrencyDialog("Currency", this,
-                getUser().getUsername(), getUser().getBalance()));
-
-        add(currencyButton);
-    }
+//    private void addCurrencyComponents() {
+//        BankButton currencyButton = new BankButton();
+//        currencyButton.setBounds(345, 110, 260, 180);
+//        currencyButton.setIcon(GuiConfiguration.MONEY_ICON, 260, 180);
+//        currencyButton.setDialog(new CurrencyDialog("Currency", this,
+//                getUser().getUsername(), getUser().getBalance()));
+//
+//        add(currencyButton);
+//    }
 
     // Adds the weather components, including an interactive button that opens the WeatherDialog.
     private void addWeatherComponents() {

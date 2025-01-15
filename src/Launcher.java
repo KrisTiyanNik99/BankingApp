@@ -4,19 +4,10 @@ import main.models.Transaction;
 import main.models.User;
 import main.models.builders.UserBuilder;
 import main.models.types.CardType;
-import main.services.api.impl.CurrencyApi;
-import main.services.api.impl.GeocodingApi;
-import main.services.api.impl.WeatherApi;
-import main.views.login_view.LoginGui;
-import main.views.login_view.RegisterGui;
 import main.views.menu_view.MenuGui;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.sql.*;
 
 public class Launcher {
     public static void main(String[] args) {
