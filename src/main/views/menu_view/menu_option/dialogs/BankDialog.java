@@ -13,7 +13,7 @@ public abstract class BankDialog extends JDialog {
 
     /**
      * Constructs a new BankDialog with the specified title, user money and parent component for centering.
-     * @param title, user name or money.
+     * @param title, username or money.
      * @param component The parent component used to center the dialog.
      */
     public BankDialog(String title, JLabel component) {

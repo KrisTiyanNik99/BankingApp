@@ -17,16 +17,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /*
-* WeatherApi is responsible for fetching and handling weather data from an external API.
-* Implements the APIService interface.
-*/
+ * WeatherApi is responsible for fetching and handling weather data from an external API.
+ * Implements the APIService interface.
+ */
 public class WeatherApi implements APIService {
     private final double latitude;
     private final double longitude;
 
     /**
      * Constructor to initialize WeatherApi with latitude and longitude.
-     * @param latitude Latitude of the location.
+     *
+     * @param latitude  Latitude of the location.
      * @param longitude Longitude of the location.
      */
     public WeatherApi(double latitude, double longitude) {
@@ -36,6 +37,7 @@ public class WeatherApi implements APIService {
 
     /**
      * Fetches the API response from the given URL.
+     *
      * @param apiUrl The API endpoint URL.
      * @return HttpURLConnection instance if successful, otherwise null.
      */
@@ -57,6 +59,7 @@ public class WeatherApi implements APIService {
 
     /**
      * Handles the response from the API and parses it into a JSON object.
+     *
      * @param connection The HttpURLConnection instance.
      * @return A parsed JSONObject containing weather data, or null in case of an error.
      */
@@ -64,23 +67,24 @@ public class WeatherApi implements APIService {
     public JSONObject handleResponse(HttpURLConnection connection) {
         try {
             if (connection.getResponseCode() != 200) {
-                new JOptionPane("Cannot connect correctly to the internet!", JOptionPane.ERROR_MESSAGE);
-            } else {
-                StringBuilder resultJson = new StringBuilder();
-                Scanner scanner = new Scanner(connection.getInputStream());
-
-                while (scanner.hasNext()) {
-                    resultJson.append(scanner.nextLine());
-                }
-
-                scanner.close();
-                connection.disconnect();
-
-                JSONParser parser = new JSONParser();
-                JSONObject jsonJsonObj = (JSONObject) parser.parse(String.valueOf(resultJson));
-
-                return (JSONObject) jsonJsonObj.get(ApiConfiguration.WEATHER_KEYWORD);
+                throw new Exception("Cannot connect correctly to the internet!");
             }
+
+            StringBuilder resultJson = new StringBuilder();
+            Scanner scanner = new Scanner(connection.getInputStream());
+
+            while (scanner.hasNext()) {
+                resultJson.append(scanner.nextLine());
+            }
+
+            scanner.close();
+            connection.disconnect();
+
+            JSONParser parser = new JSONParser();
+            JSONObject jsonJsonObj = (JSONObject) parser.parse(String.valueOf(resultJson));
+
+            return (JSONObject) jsonJsonObj.get(ApiConfiguration.WEATHER_KEYWORD);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,8 +94,9 @@ public class WeatherApi implements APIService {
 
     /**
      * Retrieves an array from a JSONObject based on a specified keyword.
+     *
      * @param jsonObject The JSONObject to search.
-     * @param keyword The key whose value is the desired array.
+     * @param keyword    The key whose value is the desired array.
      * @return JSONArray corresponding to the keyword.
      */
     @Override
@@ -101,6 +106,7 @@ public class WeatherApi implements APIService {
 
     /**
      * Retrieves weather data in string format by making an API call and processing the response.
+     *
      * @return A string representation of the weather data.
      */
     @Override
@@ -116,6 +122,7 @@ public class WeatherApi implements APIService {
 
     /**
      * Extracts detailed weather data (temperature, humidity, etc.) from the API response.
+     *
      * @param obj The JSON object containing raw weather data.
      * @return A JSON object with structured weather information.
      */
@@ -146,6 +153,7 @@ public class WeatherApi implements APIService {
 
     /**
      * Converts a weather code to its corresponding weather condition description.
+     *
      * @param code The weather code.
      * @return A string describing the weather condition.
      */
@@ -155,7 +163,7 @@ public class WeatherApi implements APIService {
             result = WeatherCode.CLEAR.getWeather();
         } else if (code > 0L && code <= 3L) {
             result = WeatherCode.CLOUDY.getWeather();
-        } else if (code > 3L && code <= 50){
+        } else if (code > 3L && code <= 50) {
             result = WeatherCode.FOG.getWeather();
         } else if ((code >= 51L && code <= 67L) ||
                 (code >= 89L && code <= 99L)) {
@@ -169,6 +177,7 @@ public class WeatherApi implements APIService {
 
     /**
      * Finds the index of the current time in the given time list.
+     *
      * @param timeList The list of time entries.
      * @return The index of the current time in the list.
      */
@@ -187,6 +196,7 @@ public class WeatherApi implements APIService {
 
     /**
      * Retrieves the current time in the format required by the weather API.
+     *
      * @return A formatted string of the current time.
      */
     private static String getCurrentTime() {

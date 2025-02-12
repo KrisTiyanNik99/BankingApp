@@ -4,7 +4,11 @@ import main.models.Transaction;
 import main.models.User;
 import main.models.builders.UserBuilder;
 import main.models.types.CardType;
+import main.services.api.config.ApiConfigurationManager;
+import main.services.api.impl.GeocodingApi;
+import main.services.mapper.ApiDataManager;
 import main.views.menu_view.MenuGui;
+import org.json.simple.JSONObject;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -30,6 +34,7 @@ public class Launcher {
                 .setId(1);
 
         user = us.build();
+
 
         new MenuGui("Bank", user).setVisible(true);
 //        CurrencyApi ap = new CurrencyApi();
