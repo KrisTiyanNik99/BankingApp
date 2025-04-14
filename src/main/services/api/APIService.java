@@ -13,5 +13,5 @@ public interface APIService {
     HttpURLConnection fetchApiResponse(String url);
     JSONObject handleResponse(HttpURLConnection connection);
     JSONArray getArray(JSONObject jsonObject, String keyword);
-    String getData();
+    String getSourceData();
 }

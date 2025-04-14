@@ -1,21 +1,19 @@
 package main.services.api.impl;
 
 import main.configs.ApiConfiguration;
-import main.services.api.APIService;
-import org.json.simple.JSONArray;
+import main.services.api.AbstractApiService;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
-import java.util.Scanner;
 
 /*
  * CurrencyApi handles fetching and processing currency exchange rate data from an external API.
  * Implements the APIService interface.
  */
-public class CurrencyApi implements APIService {
+public class CurrencyApi extends AbstractApiService {
 
     /**
      * Fetches the API response from the given URL path.
@@ -28,7 +26,8 @@ public class CurrencyApi implements APIService {
     public HttpURLConnection fetchApiResponse(String urlPath) {
 
         try {
-            URL url = new URL(urlPath);
+            URI uri = URI.create(urlPath);
+            URL url = uri.toURL();
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
@@ -46,48 +45,8 @@ public class CurrencyApi implements APIService {
         return null;
     }
 
-    /**
-     * Handles the API response and parses it into a JSON object.
-     * Displays an error dialog if the response code is not 200 (successful).
-     *
-     * @param connection The HttpURLConnection instance representing the API response.
-     * @return A parsed JSONObject containing currency data, or null in case of an error.
-     */
     @Override
-    public JSONObject handleResponse(HttpURLConnection connection) {
-
-        try {
-            if (connection.getResponseCode() != 200) {
-                throw new Exception("Cannot connect correctly to the internet!");
-            }
-
-            StringBuilder resultJson = new StringBuilder();
-            Scanner scanner = new Scanner(connection.getInputStream());
-
-            while (scanner.hasNext()) {
-                resultJson.append(scanner.nextLine());
-            }
-
-            scanner.close();
-            connection.disconnect();
-
-            JSONParser parser = new JSONParser();
-            return (JSONObject) parser.parse(String.valueOf(resultJson));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    @Override
-    public JSONArray getArray(JSONObject jsonObject, String keyword) {
-        return (JSONArray) jsonObject.get(keyword);
-    }
-
-    @Override
-    public String getData() {
+    public String getSourceData() {
         HttpURLConnection connection = fetchApiResponse(ApiConfiguration.CURRENCY_API);
         JSONObject jsonObject = handleResponse(connection);
 

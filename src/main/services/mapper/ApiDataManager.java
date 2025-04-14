@@ -26,7 +26,7 @@ public class ApiDataManager {
 
         try {
             // Fetch geocoding data for the city
-            JSONArray geocodingArr = (JSONArray) parser.parse(new GeocodingApi(city).getData());
+            JSONArray geocodingArr = (JSONArray) parser.parse(new GeocodingApi(city).getSourceData());
             JSONObject geocodingObj = (JSONObject) geocodingArr.get(0);
 
             // Extract latitude and longitude from geocoding data
@@ -34,19 +34,16 @@ public class ApiDataManager {
             double longitude = (double) geocodingObj.get("longitude");
 
             // Fetch and return weather data for the extracted coordinates
-            return (JSONObject) parser.parse(new WeatherApi(latitude, longitude).getData());
+            return (JSONObject) parser.parse(new WeatherApi(latitude, longitude).getSourceData());
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-
-        // Display error message if the operation fails
-        new JOptionPane("Cannot connect correctly to the internet!", JOptionPane.ERROR_MESSAGE);
 
         return null;
     }
 
     public static void setCurrencyOptionsToElement(JComboBox<String> options) {
-        String[] currency = new CurrencyApi().getData().split(",");
+        String[] currency = new CurrencyApi().getSourceData().split(",");
         for (int i = 0; i < currency.length; i++) {
             if (i % 2 == 0) {
                 options.addItem(currency[i]);

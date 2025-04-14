@@ -30,13 +30,9 @@ public class ApiConfigurationManager {
      * @param city The name of the city for which geocoding data is required.
      * @return A formatted URL string for the geocoding API.
      */
-    public String getGeoCodingApi(String city) {
-        String geocodingUrl = ApiConfiguration.GEOCODING_API;
-
-        // Replace placeholder with city name
-        geocodingUrl = geocodingUrl.replace(ApiConfiguration.GEOCODING_KEY, city);
-
-        return geocodingUrl;
+    public String getGeoCodeByCity(String city) {
+        return ApiConfiguration.GEOCODING_API
+                .replace(ApiConfiguration.GEOCODING_KEY, city); // Replace placeholder with city name
     }
 
     /**
@@ -45,24 +41,15 @@ public class ApiConfigurationManager {
      * @param longitude The longitude of the location.
      * @return A formatted URL string for the weather API.
      */
-    public String getWeatherApi(double latitude, double longitude) {
-        String weatherUrl = ApiConfiguration.WEATHER_API;
-
-        // Replace placeholder with latitude
-        weatherUrl = weatherUrl.replace(ApiConfiguration.LATITUDE_KEY, String.valueOf(latitude));
-
-        // Replace placeholder with longitude
-        weatherUrl = weatherUrl.replace(ApiConfiguration.LONGITUDE_KEY, String.valueOf(longitude));
-
-        return weatherUrl;
+    public String getWeatherApiCoordinateUrl(double latitude, double longitude) {
+        return ApiConfiguration.WEATHER_API
+                .replace(ApiConfiguration.LATITUDE_KEY, String.valueOf(latitude))     // Replace placeholder with latitude
+                .replace(ApiConfiguration.LONGITUDE_KEY, String.valueOf(longitude));  // Replace placeholder with longitude
     }
 
     public String getCurrencyCoursesUrl(String currencyOne, String currencyTwo) {
-        String currencyCourseUrl = ApiConfiguration.CURRENCY_COURSE_API;
-
-        currencyCourseUrl = currencyCourseUrl.replace(ApiConfiguration.CURRENCY_EXCHANGE, currencyOne);
-        currencyCourseUrl = currencyCourseUrl.replace(ApiConfiguration.CURRENCY_TRANSFER, currencyTwo);
-
-        return currencyCourseUrl;
+        return ApiConfiguration.CURRENCY_COURSE_API
+                .replace(ApiConfiguration.CURRENCY_EXCHANGE, currencyOne)
+                .replace(ApiConfiguration.CURRENCY_TRANSFER, currencyTwo);
     }
 }

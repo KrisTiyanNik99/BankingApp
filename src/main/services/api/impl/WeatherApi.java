@@ -2,25 +2,20 @@ package main.services.api.impl;
 
 import main.configs.ApiConfiguration;
 import main.models.types.WeatherCode;
-import main.services.api.APIService;
+import main.services.api.AbstractApiService;
 import main.services.api.config.ApiConfigurationManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import javax.swing.*;
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 /*
  * WeatherApi is responsible for fetching and handling weather data from an external API.
  * Implements the APIService interface.
  */
-public class WeatherApi implements APIService {
+public class WeatherApi extends AbstractApiService {
     private final double latitude;
     private final double longitude;
 
@@ -36,28 +31,6 @@ public class WeatherApi implements APIService {
     }
 
     /**
-     * Fetches the API response from the given URL.
-     *
-     * @param apiUrl The API endpoint URL.
-     * @return HttpURLConnection instance if successful, otherwise null.
-     */
-    @Override
-    public HttpURLConnection fetchApiResponse(String apiUrl) {
-        try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
-
-            return connection;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
      * Handles the response from the API and parses it into a JSON object.
      *
      * @param connection The HttpURLConnection instance.
@@ -66,22 +39,7 @@ public class WeatherApi implements APIService {
     @Override
     public JSONObject handleResponse(HttpURLConnection connection) {
         try {
-            if (connection.getResponseCode() != 200) {
-                throw new Exception("Cannot connect correctly to the internet!");
-            }
-
-            StringBuilder resultJson = new StringBuilder();
-            Scanner scanner = new Scanner(connection.getInputStream());
-
-            while (scanner.hasNext()) {
-                resultJson.append(scanner.nextLine());
-            }
-
-            scanner.close();
-            connection.disconnect();
-
-            JSONParser parser = new JSONParser();
-            JSONObject jsonJsonObj = (JSONObject) parser.parse(String.valueOf(resultJson));
+            JSONObject jsonJsonObj = super.handleResponse(connection);
 
             return (JSONObject) jsonJsonObj.get(ApiConfiguration.WEATHER_KEYWORD);
 
@@ -93,25 +51,13 @@ public class WeatherApi implements APIService {
     }
 
     /**
-     * Retrieves an array from a JSONObject based on a specified keyword.
-     *
-     * @param jsonObject The JSONObject to search.
-     * @param keyword    The key whose value is the desired array.
-     * @return JSONArray corresponding to the keyword.
-     */
-    @Override
-    public JSONArray getArray(JSONObject jsonObject, String keyword) {
-        return (JSONArray) jsonObject.get(keyword);
-    }
-
-    /**
      * Retrieves weather data in string format by making an API call and processing the response.
      *
      * @return A string representation of the weather data.
      */
     @Override
-    public String getData() {
-        String url = ApiConfigurationManager.getInstance().getWeatherApi(latitude, longitude);
+    public String getSourceData() {
+        String url = ApiConfigurationManager.getInstance().getWeatherApiCoordinateUrl(latitude, longitude);
         HttpURLConnection connection = fetchApiResponse(url);
         JSONObject obj = handleResponse(connection);
 

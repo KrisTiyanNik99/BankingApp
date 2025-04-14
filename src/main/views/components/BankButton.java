@@ -177,8 +177,6 @@ public class BankButton extends JButton {
 
 
 
-
-
     private String getTextFromTextField(JTextField amountField) {
         String text = amountField.getText();
         if (text == null || text.isBlank()) {

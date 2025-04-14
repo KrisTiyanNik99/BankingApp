@@ -64,13 +64,13 @@ public class CurrencyDialog extends BankDialog {
         // Dropdown for selecting the currency to convert from
         JComboBox<String> exchangedCurrency = new JComboBox<>();
         setJComboBoxConfiguration(exchangedCurrency, 320);
-        ApiDataManager.setCurrencyOptionsToElement(exchangedCurrency);
+        addCurrencyToTheDropDownMenu(exchangedCurrency);
         add(exchangedCurrency);
 
         // Dropdown for selecting the currency to convert to
         JComboBox<String> transferCurrency = new JComboBox<>();
         setJComboBoxConfiguration(transferCurrency, 365);
-        ApiDataManager.setCurrencyOptionsToElement(transferCurrency);
+        addCurrencyToTheDropDownMenu(transferCurrency);
         add(transferCurrency);
 
         // Field to display the converted currency amount
@@ -83,16 +83,28 @@ public class CurrencyDialog extends BankDialog {
         add(convertedMoney);
 
         // Button to convert all user money
-        BankButton convertUserMoney = new BankButton("Convert all money");
+        BankButton convertUserMoney = new BankButton("Convert user money");
         convertUserMoney.setCurrencySettings(LOCATION_X, 415, CONTAINER_WIDTH, CONTAINER_HEIGHT, TEXT_SIZE);
         convertUserMoney.getCurrencyRate(exchangedCurrency, transferCurrency, getUserMoney(), convertedMoney);
         add(convertUserMoney);
 
         // Button to convert a specified amount of money
-        BankButton convert = new BankButton("Convert");
+        BankButton convert = new BankButton("Convert sum of money");
         convert.setCurrencySettings(LOCATION_X, 460, CONTAINER_WIDTH, CONTAINER_HEIGHT, TEXT_SIZE);
         convert.getCurrencyRate(exchangedCurrency, transferCurrency, moneyField, convertedMoney);
         add(convert);
+    }
+
+    private void addCurrencyToTheDropDownMenu(JComboBox<String> dropDownMenu) {
+        new Thread(() -> {
+            ApiDataManager.setCurrencyOptionsToElement(dropDownMenu);
+
+            System.out.println("Hii ot noviq thred!");
+            SwingUtilities.invokeLater(() -> {
+                dropDownMenu.revalidate();
+                dropDownMenu.repaint();
+            });
+        }).start();
     }
 
     /**
