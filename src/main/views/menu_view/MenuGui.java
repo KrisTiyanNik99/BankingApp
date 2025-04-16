@@ -24,7 +24,6 @@ public class MenuGui extends BankFrame {
 
         addSideBarComponents(mainBackground);
 
-        //TO-DO: Add home page(with money value api and time apis) with all menu options in a row (like a grid panel)---
         addHomePage(mainBackground);
 
         add(mainBackground);

@@ -14,7 +14,6 @@ import org.json.simple.parser.ParseException;
 import javax.swing.*;
 
 public class ApiDataManager {
-
     /**
      * Extracts weather data for a specified city by combining data from the Geocoding API and Weather API.
      *
@@ -42,13 +41,16 @@ public class ApiDataManager {
         return null;
     }
 
-    public static void setCurrencyOptionsToElement(JComboBox<String> options) {
+    public static JComboBox<String> getCurrencyMenuOptions() {
+        JComboBox<String> options = new JComboBox<>();
         String[] currency = new CurrencyApi().getSourceData().split(",");
         for (int i = 0; i < currency.length; i++) {
             if (i % 2 == 0) {
                 options.addItem(currency[i]);
             }
         }
+
+        return options;
     }
 
     public static String getConversionRate(String currencyRateOne, String currencyRateTwo) {
@@ -58,7 +60,7 @@ public class ApiDataManager {
 
         String[] rateValue = jsonObject.get(ApiConfiguration.CURRENCY_RATE_KEYWORD).toString()
                 .replaceAll("\\{", "")
-                .replaceAll("\\}", "")
+                .replaceAll("}", "")
                 .split(":");
 
         return rateValue.length <= 1 ? "0" : rateValue[1];

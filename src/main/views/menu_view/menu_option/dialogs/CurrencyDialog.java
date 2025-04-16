@@ -1,7 +1,6 @@
 package main.views.menu_view.menu_option.dialogs;
 
 import main.configs.GuiConfiguration;
-import main.services.mapper.ApiDataManager;
 import main.views.components.BankButton;
 import main.views.components.BankLabel;
 
@@ -19,6 +18,8 @@ public class CurrencyDialog extends BankDialog {
     private final static int CONTAINER_HEIGHT = 40;
     private final static int TEXT_SIZE = 20;
     private final static int LOCATION_X = 30;
+
+    private JComboBox<String> exchangedCurrency, transferCurrency;
 
     /**
      * Constructor to initialize the CurrencyDialog.
@@ -45,7 +46,7 @@ public class CurrencyDialog extends BankDialog {
 
         // User icon and balance label
         BankLabel userIconMoney = new BankLabel();
-        userIconMoney.setBounds(LOCATION_X, 220, 50,50);
+        userIconMoney.setBounds(LOCATION_X, 220, 50,CONTAINER_HEIGHT + 10);
         userIconMoney.setResizedBackground(40,CONTAINER_HEIGHT, GuiConfiguration.USER_MONEY_ICON);
         add(userIconMoney);
 
@@ -62,15 +63,13 @@ public class CurrencyDialog extends BankDialog {
         add(moneyField);
 
         // Dropdown for selecting the currency to convert from
-        JComboBox<String> exchangedCurrency = new JComboBox<>();
+        exchangedCurrency = new JComboBox<>();
         setJComboBoxConfiguration(exchangedCurrency, 320);
-        addCurrencyToTheDropDownMenu(exchangedCurrency);
         add(exchangedCurrency);
 
         // Dropdown for selecting the currency to convert to
-        JComboBox<String> transferCurrency = new JComboBox<>();
+        transferCurrency = new JComboBox<>();
         setJComboBoxConfiguration(transferCurrency, 365);
-        addCurrencyToTheDropDownMenu(transferCurrency);
         add(transferCurrency);
 
         // Field to display the converted currency amount
@@ -85,7 +84,7 @@ public class CurrencyDialog extends BankDialog {
         // Button to convert all user money
         BankButton convertUserMoney = new BankButton("Convert user money");
         convertUserMoney.setCurrencySettings(LOCATION_X, 415, CONTAINER_WIDTH, CONTAINER_HEIGHT, TEXT_SIZE);
-        convertUserMoney.getCurrencyRate(exchangedCurrency, transferCurrency, getUserMoney(), convertedMoney);
+        convertUserMoney.convertCurrencyRateToMoney(exchangedCurrency, transferCurrency, getUserMoney(), convertedMoney);
         add(convertUserMoney);
 
         // Button to convert a specified amount of money
@@ -95,16 +94,15 @@ public class CurrencyDialog extends BankDialog {
         add(convert);
     }
 
-    private void addCurrencyToTheDropDownMenu(JComboBox<String> dropDownMenu) {
-        new Thread(() -> {
-            ApiDataManager.setCurrencyOptionsToElement(dropDownMenu);
+    public void setCurrencyValuesToMenus(JComboBox<String> currencyValues) {
+        for (int i = 0; i < currencyValues.getItemCount(); i++) {
+            String currency = currencyValues.getItemAt(i);
+            exchangedCurrency.addItem(currency);
+            transferCurrency.addItem(currency);
+        }
 
-            System.out.println("Hii ot noviq thred!");
-            SwingUtilities.invokeLater(() -> {
-                dropDownMenu.revalidate();
-                dropDownMenu.repaint();
-            });
-        }).start();
+        exchangedCurrency.repaint();
+        transferCurrency.repaint();
     }
 
     /**

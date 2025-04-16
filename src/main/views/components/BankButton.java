@@ -6,6 +6,7 @@ import main.services.generators.CredentialsGenerator;
 import main.services.generators.impls.DefaultGenerator;
 import main.services.mapper.ApiDataManager;
 import main.views.menu_view.menu_option.dialogs.BankDialog;
+import main.views.menu_view.menu_option.dialogs.LoadingDialog;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class BankButton extends JButton {
 
@@ -56,7 +58,7 @@ public class BankButton extends JButton {
         setIcon(imageUrl, 40, height);
     }
 
-    public void setCurrencySettings(int x, int y, int width, int height, int textSize){
+    public void setCurrencySettings(int x, int y, int width, int height, int textSize) {
         setBounds(x, y, width, height);
         setBackground(Color.GREEN);
         setFont(new Font("Ariel", Font.BOLD, textSize));
@@ -64,20 +66,9 @@ public class BankButton extends JButton {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
     public void setDialog(BankDialog bankDialog) {
         this.addActionListener(e -> {
-            Thread dialogThread = new Thread(() -> {
+            new Thread(() -> {
                 // Create and display dialog in EDT
                 SwingUtilities.invokeLater(() -> {
                     bankDialog.addWindowListener(new WindowAdapter() {
@@ -89,9 +80,7 @@ public class BankButton extends JButton {
 
                     bankDialog.setVisible(true);
                 });
-            });
-
-            dialogThread.start();
+            }).start();
         });
     }
 
@@ -121,60 +110,67 @@ public class BankButton extends JButton {
         });
     }
 
-    public void getCurrencyRate(JComboBox<String> currencyExchange, JComboBox<String> currencyTransfer,
-                                BigDecimal userMoney, JTextField displayedField) {
+    public void convertCurrencyRateToMoney(JComboBox<String> currencyExchange, JComboBox<String> currencyTransfer,
+                                           BigDecimal userMoney, JTextField displayedField) {
         this.addActionListener(e -> {
-            String currencyOne = currencyExchange.getSelectedItem().toString();
-            String currencyTwo = currencyTransfer.getSelectedItem().toString();
+            new Thread(() -> {
+                String currencyOne = Objects.requireNonNull(currencyExchange.getSelectedItem()).toString();
+                String currencyTwo = Objects.requireNonNull(currencyTransfer.getSelectedItem()).toString();
 
-            String rateText = ApiDataManager.getConversionRate(currencyOne, currencyTwo);
+                String rateText = ApiDataManager.getConversionRate(currencyOne, currencyTwo);
 
-            BigDecimal rate = BigDecimal.valueOf(Double.parseDouble(rateText));
+                BigDecimal rate = BigDecimal.valueOf(Double.parseDouble(rateText));
 
-            displayedField.setText(String.valueOf(userMoney.multiply(rate)));
+                SwingUtilities.invokeLater(() -> {
+                    displayedField.setText(String.valueOf(userMoney.multiply(rate)));
+                });
+            }).start();
         });
     }
 
     public void getCurrencyRate(JComboBox<String> currencyExchange, JComboBox<String> currencyTransfer,
                                 JTextField amountField, JTextField displayedField) {
         this.addActionListener(e -> {
-            String currencyOne = currencyExchange.getSelectedItem().toString();
-            String currencyTwo = currencyTransfer.getSelectedItem().toString();
+            new Thread(() -> {
+                String currencyOne = Objects.requireNonNull(currencyExchange.getSelectedItem()).toString();
+                String currencyTwo = Objects.requireNonNull(currencyTransfer.getSelectedItem()).toString();
 
-            String rateText = ApiDataManager.getConversionRate(currencyOne, currencyTwo);
+                String rateText = ApiDataManager.getConversionRate(currencyOne, currencyTwo);
 
-            double rate = Double.parseDouble(rateText);
-            double amount = Double.parseDouble(getTextFromTextField(amountField));
+                double rate = Double.parseDouble(rateText);
+                double amount = Double.parseDouble(getTextFromTextField(amountField));
 
-            displayedField.setText(String.valueOf(amount * rate));
+                SwingUtilities.invokeLater(() -> {
+                    displayedField.setText(String.valueOf(amount * rate));
+                });
+            }).start();
         });
     }
 
     public void getWeather(JTextField search, BankLabel weatherCondition, JLabel weatherConditionText, JLabel temperature,
                            JLabel humidityText, JLabel windSpeedText) {
         this.addActionListener(e -> {
-            String city = search.getText();
-            JSONObject weatherDataObject = ApiDataManager.extractWeatherData(city);
+            new Thread(() -> {
+                System.out.println("Aideeeee novo vreme doide, osvobojdenie da ima!");
+                String city = search.getText();
+                JSONObject weatherDataObject = ApiDataManager.extractWeatherData(city);
 
-            WeatherCode weatherCode = WeatherCode.parseWeatherCode(weatherDataObject
-                    .get(ApiConfiguration.WEATHER_CONDITION).toString());
+                WeatherCode weatherCode = WeatherCode.parseWeatherCode(weatherDataObject
+                        .get(ApiConfiguration.WEATHER_CONDITION).toString());
+                String temp = weatherDataObject.get(ApiConfiguration.TEMPERATURE).toString();
+                String humidity = weatherDataObject.get(ApiConfiguration.HUMIDITY).toString();
+                String windSpeed = weatherDataObject.get(ApiConfiguration.WIND_SPEED).toString();
 
-            weatherCondition.setResizedBackground(450, 217, weatherCode.getWeatherImageUrl());
-            weatherConditionText.setText(weatherDataObject.get(ApiConfiguration.WEATHER_CONDITION).toString());
-
-            String temp = weatherDataObject.get(ApiConfiguration.TEMPERATURE).toString();
-            temperature.setText(temp + " C");
-
-            String humidity = weatherDataObject.get(ApiConfiguration.HUMIDITY).toString();
-            humidityText.setText("<html><b>Humidity</b> " + humidity + "%</html>");
-
-            String windSpeed = weatherDataObject.get(ApiConfiguration.WIND_SPEED).toString();
-            windSpeedText.setText("<html><b>Wind Speed</b> " + windSpeed + "km/h</html>");
+                SwingUtilities.invokeLater(() -> {
+                    weatherCondition.setResizedBackground(450, 217, weatherCode.getWeatherImageUrl());
+                    weatherConditionText.setText(weatherDataObject.get(ApiConfiguration.WEATHER_CONDITION).toString());
+                    temperature.setText(temp + " C");
+                    humidityText.setText("<html><b>Humidity</b> " + humidity + "%</html>");
+                    windSpeedText.setText("<html><b>Wind Speed</b> " + windSpeed + "km/h</html>");
+                });
+            }).start();
         });
     }
-
-
-
 
 
     private String getTextFromTextField(JTextField amountField) {

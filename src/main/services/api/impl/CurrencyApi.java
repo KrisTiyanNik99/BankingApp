@@ -68,7 +68,7 @@ public class CurrencyApi extends AbstractApiService {
 
         String[] currencyJson = jsonObject.get(ApiConfiguration.CURRENCY_KEYWORD).toString()
                 .replaceAll("\\{", "")
-                .replaceAll("\\}", "")
+                .replaceAll("}", "")
                 .replaceAll("\"", "")
                 .split("[:,]");
 

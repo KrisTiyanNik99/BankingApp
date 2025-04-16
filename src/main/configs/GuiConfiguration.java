@@ -43,16 +43,16 @@ public interface GuiConfiguration {
     Color DARK_BLUE = new Color(4, 6, 102);
 
     // Text size and label scaling for GUI components
-    int TEXT_SIZE = 15;          // Font size for text elements
-    int LABEL_SCALE = 10;        // Scaling factor for labels
+    int TEXT_SIZE = 15;                  // Font size for text elements
+    int LABEL_SCALE = 10;                // Scaling factor for labels
 
     // Dimensions for container components
-    int CONTAINER_WIDTH = 300;   // Default width for containers
-    int CONTAINER_HEIGHT = 40;   // Default height for containers
+    int CONTAINER_WIDTH = 300;           // Default width for containers
+    int CONTAINER_HEIGHT = 40;           // Default height for containers
 
     // Label and field position adjustments
-    int xLabelScale = 45;        // Horizontal position adjustment for labels
-    int xFieldScale = 40;        // Horizontal position adjustment for fields
+    int xLabelScale = 45;                // Horizontal position adjustment for labels
+    int xFieldScale = 40;                // Horizontal position adjustment for fields
 
     // To-do components
     int TO_DO_CONTAINER_WIDTH = 420;     // Default width for to-do components

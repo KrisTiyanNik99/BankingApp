@@ -1,6 +1,6 @@
 package main.views.login_view;
 
-import main.configs.Contacts;
+import main.configs.ContactConfiguration;
 import main.configs.GuiConfiguration;
 import main.views.BankFrame;
 import main.views.components.BankButton;
@@ -90,8 +90,8 @@ public class LoginGui extends BankFrame {
         backgroundLabel.add(description);
 
         // Add contact labels
-        displayContactLabels(backgroundLabel, Contacts.getContactsNames(), GuiConfiguration.xLabelScale, 265, 410);
-        displayContactLabels(backgroundLabel, Contacts.getLinks(), 125, 285, 210);
+        displayContactLabels(backgroundLabel, ContactConfiguration.getContactsNames(), GuiConfiguration.xLabelScale, 265, 410);
+        displayContactLabels(backgroundLabel, ContactConfiguration.getLinks(), 125, 285, 210);
     }
 
     //TO-DO: Add hipper link function to mu GitHub and LinkedIn profiles------------------------------------------------
