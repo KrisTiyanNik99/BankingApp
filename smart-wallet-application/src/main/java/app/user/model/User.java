@@ -1,10 +1,19 @@
 package app.user.model;
 
+import app.subscription.model.Subscription;
+import app.wallet.model.Wallet;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class User {
     @Id
@@ -36,4 +45,9 @@ public class User {
     @Column(nullable = false)
     private LocalDate updatedOn;
 
+    @OneToMany
+    private List<Subscription> subscriptions;
+
+    @OneToMany
+    private List<Wallet> wallets;
 }
