@@ -5,7 +5,8 @@ import app.wallet.model.Wallet;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,17 +38,21 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Country country;
+
     private boolean active;
 
     @Column(nullable = false)
-    private LocalDate createdOn;
+    private LocalDateTime createdOn;
 
     @Column(nullable = false)
-    private LocalDate updatedOn;
+    private LocalDateTime updatedOn;
 
-    @OneToMany
-    private List<Subscription> subscriptions;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
+    private List<Subscription> subscriptions = new ArrayList<>();
 
-    @OneToMany
-    private List<Wallet> wallets;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
+    private List<Wallet> wallets = new ArrayList<>();
 }

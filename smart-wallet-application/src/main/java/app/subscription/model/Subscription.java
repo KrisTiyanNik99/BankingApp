@@ -20,7 +20,7 @@ public class Subscription {
     private UUID id;
 
     @ManyToOne
-    private User user;
+    private User owner;
 
     @Column(nullable = false)
     private SubscriptionStatus status;

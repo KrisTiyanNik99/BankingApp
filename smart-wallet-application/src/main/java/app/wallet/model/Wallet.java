@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.UUID;
 
 @Getter
@@ -26,8 +27,11 @@ public class Wallet {
     @Enumerated(EnumType.STRING)
     private WalletStatus status;
 
+    @Column(nullable = false)
     private BigDecimal balance;
-    private BigDecimal currency;
+
+    @Column(nullable = false)
+    private Currency currency;
 
     @Column(nullable = false)
     private LocalDateTime createdOn;

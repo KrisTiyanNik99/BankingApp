@@ -44,7 +44,9 @@ public class Transaction {
     @Column(nullable = false)
     private TransactionStatus status;
 
+    @Column(nullable = false)
     private String description;
+
     private String failureReason;
 
     @Column(nullable = false)
