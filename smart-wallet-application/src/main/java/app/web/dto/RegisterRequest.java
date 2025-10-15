@@ -4,17 +4,24 @@ import app.user.model.Country;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-public record RegisterRequest(
-        @NotBlank
-        @Size(min = 6, max = 26, message = "Username length must be between 6 and 26 symbols.")
-        String username,
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class RegisterRequest {
+    @NotBlank
+    @Size(min = 6, max = 26, message = "Username length must be between 6 and 26 symbols.")
+    private String username;
 
-        @NotBlank
-        @Size(min = 6, max = 6, message = "Password must be exactly 6 symbols.")
-        String password,
+    @NotBlank
+    @Size(min = 6, max = 6, message = "Password must be exactly 6 symbols.")
+    private String password;
 
-        @NotNull
-        Country country
-) {
+    @NotNull
+    private Country country;
 }

@@ -2,7 +2,9 @@ package app.web.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
+@Builder
 public record LoginRequest(
         @NotBlank
         @Size(min = 6, max = 26, message = "Username length must be between 6 and 26 symbols.")

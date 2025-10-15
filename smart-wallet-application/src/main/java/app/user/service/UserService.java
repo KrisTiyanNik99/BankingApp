@@ -1,4 +1,4 @@
-package app.user.services;
+package app.user.service;
 
 import app.subscription.service.SubscriptionService;
 import app.user.model.User;
@@ -41,16 +41,16 @@ public class UserService {
 
     @Transactional
     public User register(RegisterRequest registerRequest) {
-        Optional<User> optionalUser = userRepository.findByUsername(registerRequest.username());
+        Optional<User> optionalUser = userRepository.findByUsername(registerRequest.getUsername());
         if (optionalUser.isPresent()) {
-            throw new RuntimeException(USER_EXIST_ERROR_MESSAGE.formatted(registerRequest.username()));
+            throw new RuntimeException(USER_EXIST_ERROR_MESSAGE.formatted(registerRequest.getUsername()));
         }
 
         User user = User.builder()
-                .username(registerRequest.username())
-                .password(passwordEncoder.encode(registerRequest.password()))
+                .username(registerRequest.getUsername())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .userRole(UserRole.USER)
-                .country(registerRequest.country())
+                .country(registerRequest.getCountry())
                 .active(true)
                 .createdOn(LocalDateTime.now())
                 .updatedOn(LocalDateTime.now())
@@ -60,7 +60,7 @@ public class UserService {
         walletService.createNewWallet(user);
         subscriptionService.createDefaultSubscription(user);
 
-        log.info(NEW_USER_REGISTRATION_MESSAGE.formatted(registerRequest.username()));
+        log.info(NEW_USER_REGISTRATION_MESSAGE.formatted(registerRequest.getUsername()));
 
         return user;
     }
