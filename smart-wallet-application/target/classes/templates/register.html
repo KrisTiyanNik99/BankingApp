@@ -37,7 +37,7 @@
 
       <label for="country">Country</label>
       <select id="country" th:field="*{country}">
-        <option th:each="country : ${countries}" th:value="${country}" th:text="${country}">BULGARIA</option>
+        <option th:each="country : ${T(app.user.model.Country).values()}" th:value="${country}" th:text="${country}">COUNTRY</option>
       </select>
 
       <button>Register</button>

@@ -2,16 +2,19 @@ package app.web.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
+import lombok.*;
 
 @Builder
-public record LoginRequest(
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class LoginRequest {
         @NotBlank
         @Size(min = 6, max = 26, message = "Username length must be between 6 and 26 symbols.")
-        String username,
+        private String username;
 
         @NotBlank
         @Size(min = 6, max = 6, message = "Password must be exactly 6 symbols.")
-        String password
-) {
+        private String password;
 }

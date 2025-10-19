@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -40,7 +41,7 @@ public class UserService {
     }
 
     @Transactional
-    public User register(RegisterRequest registerRequest) {
+    public void register(RegisterRequest registerRequest) {
         Optional<User> optionalUser = userRepository.findByUsername(registerRequest.getUsername());
         if (optionalUser.isPresent()) {
             throw new RuntimeException(USER_EXIST_ERROR_MESSAGE.formatted(registerRequest.getUsername()));
@@ -61,23 +62,30 @@ public class UserService {
         subscriptionService.createDefaultSubscription(user);
 
         log.info(NEW_USER_REGISTRATION_MESSAGE.formatted(registerRequest.getUsername()));
-
-        return user;
     }
 
     public User login(LoginRequest loginRequest) {
-        Optional<User> optionalUser = userRepository.findByUsername(loginRequest.username());
+        Optional<User> optionalUser = userRepository.findByUsername(loginRequest.getUsername());
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException(USER_DOES_NOT_EXIST.formatted(loginRequest.username()));
+            throw new RuntimeException(USER_DOES_NOT_EXIST.formatted(loginRequest.getUsername()));
         }
 
-        String rawPassword = loginRequest.password();
+        String rawPassword = loginRequest.getPassword();
         // Password check
         if (!passwordEncoder.matches(rawPassword, optionalUser.get().getPassword())) {
             throw new RuntimeException(INCORRECT_DATA);
         }
 
-        log.info(USER_LOGIN_MESSAGE.formatted(loginRequest.username()));
+        log.info(USER_LOGIN_MESSAGE.formatted(loginRequest.getPassword()));
+
+        return optionalUser.get();
+    }
+
+    public User getById(UUID userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("Such user does not exit!");
+        }
 
         return optionalUser.get();
     }
