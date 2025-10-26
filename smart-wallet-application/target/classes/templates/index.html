@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"><head>
   <meta charset="UTF-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -13,8 +13,8 @@
 <header class="header">
   <div class="header-inner">
     <nav class="nav">
-      <a href="/login" class="button login">Login</a>
-      <a href="/register" class="button register">Register</a>
+      <a th:href="@{/login}" class="button login">Login</a>
+      <a th:href="@{/register}" class="button register">Register</a>
     </nav>
   </div>
 </header>
@@ -25,5 +25,5 @@
     </a>
   </div>
 </main>
-<div class="footer"><p>© 2025 Smart Wallet. All rights reserved.</p></div>
+  <th:blok th:insert="fragments/my-footer :: website-footer"></th:blok>
 </body></html>

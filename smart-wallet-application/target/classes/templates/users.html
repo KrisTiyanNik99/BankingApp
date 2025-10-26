@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,15 +26,16 @@
             <div class="smart-wallet-nav-bar-name">Smart Wallet</div>
             <div class="smart-wallet-nav-bar-version">v1.0.0</div>
           </div>
+
           <div class="func-block">
-            <a href="/home">
+            <a th:href="@{/home}">
               <p>Dashboard</p>
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                    width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"></path>
               </svg>
             </a>
-            <a class="special-gold" href="/subscriptions">
+            <a class="special-gold" th:href="@{/subscriptions}">
               <p>Upgrade</p>
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                    width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -44,9 +45,10 @@
               </svg>
             </a>
           </div>
+
           <div class="func-block">
             <span>Quick Link</span>
-            <a href="/transfers">
+            <a th:href="@{/transfers}">
               <p>Transfers</p>
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                    width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -54,7 +56,7 @@
                       d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"></path>
               </svg>
             </a>
-            <a href="/wallets">
+            <a th:href="@{/wallets}">
               <p>Wallets</p>
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                    width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -66,7 +68,7 @@
                       clip-rule="evenodd"></path>
               </svg>
             </a>
-            <a href="/transactions">
+            <a th:href="@{/transactions}">
               <p>Transactions</p>
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                    width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -75,9 +77,10 @@
               </svg>
             </a>
           </div>
+
           <div class="func-block">
             <span>Utility</span>
-            <a href="/subscriptions/history">
+            <a th:href="@{/subscriptions/history}">
               <p>Subscription History</p>
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                    width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -85,15 +88,16 @@
                       d="M12 6h.01M12 12h.01M12 18h.01"></path>
               </svg>
             </a>
-            <a href="/notifications">
+            <a th:href="@{/notifications}">
               <p>Notifications</p>
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6h.01M12 12h.01M12 18h.01"></path>
               </svg>
             </a>
           </div>
+
           <div class="func-block admin-func-block">
             <span>Admin</span>
-            <a href="/users" class="active">
+            <a th:href="@{/users}" class="active">
               <p>Users</p>
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                    width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -101,7 +105,7 @@
                       d="M12 6h.01M12 12h.01M12 18h.01"></path>
               </svg>
             </a>
-            <a href="/reports">
+            <a th:href="@{/reports}">
               <p>Reports</p>
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                    width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -110,8 +114,9 @@
               </svg>
             </a>
           </div>
+
           <div class="func-block">
-            <a class="logout" href="/logout">
+            <a class="logout" th:href="@{/logout}">
               <p>Logout</p>
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                    width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -124,6 +129,8 @@
       </nav>
     </div>
   </div>
+
+  <!-- ##################            This is users container            ################## -->
   <div class="home-section">
     <div class="single-section-box subscriptions-container">
       <table class="styled-table">
@@ -139,41 +146,21 @@
           <th>Switch status</th>
         </tr>
         </thead>
+
         <tbody>
-        <tr>
-          <td>4531a4c8-87d0-4e47-a42a-532ec4e85451</td>
-          <td>manarin0</td>
-          <td>no email</td>
-          <td>User</td>
-          <td>Bulgaria</td>
+        <tr th:each="user : ${users}">
+          <td th:text="${user.id}">4531a4c8-87d0-4e47-a42a-532ec4e85451</td>
+          <td th:text="${user.username}">manarin0</td>
+          <td th:text="${#strings.isEmpty(user.email) ? 'no email' : user.email}">no email</td>
+          <td th:text="${user.userRole}">User</td>
+          <td th:text="${user.country}">Bulgaria</td>
           <td>
-            <p class="status active">Active</p>
+            <p th:if="${user.active}" class="status active">Active</p>
+            <p th:if="${!user.active}" class="status terminated">Inactive</p>
           </td>
-          <td>11 Dec 2024 21:09</td>
+          <td th:text="${#temporals.format(user.createdOn, 'dd MMM yyyy HH:mm')}">11 Dec 2024 21:09</td>
           <td>
             <form action="/users/4531a4c8-87d0-4e47-a42a-532ec4e85451/status">
-              <button class="profile-actions-button">
-                <p>Switch</p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                     class="bi bi-toggle-on" viewBox="0 0 16 16">
-                  <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8"></path>
-                </svg>
-              </button>
-            </form>
-          </td>
-        </tr>
-        <tr>
-          <td>717b88ba-a153-4801-b037-9a81119bbf86</td>
-          <td>Ivan654</td>
-          <td>no email</td>
-          <td>User</td>
-          <td>Bulgaria</td>
-          <td>
-            <p class="status terminated">Inactive</p>
-          </td>
-          <td>22 Dec 2024 14:41</td>
-          <td>
-            <form action="/users/717b88ba-a153-4801-b037-9a81119bbf86/status">
               <button class="profile-actions-button">
                 <p>Switch</p>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -189,7 +176,7 @@
     </div>
   </div>
 </main>
-<div class="footer"><p>© 2025 Smart Wallet. All rights reserved.</p></div>
+<th:blok th:insert="fragments/my-footer :: website-footer"></th:blok>
 
 </body>
 </html>

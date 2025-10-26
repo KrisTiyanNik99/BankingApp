@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"><head>
   <meta charset="UTF-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -100,13 +100,14 @@
       </div>
     </nav>
   </div></div>
+
   <div class="home-section">
     <div class="single-section-box transfer-container">
       <div class="transfer-section">
 
         <h2>Transfer Funds</h2>
 
-        <form action="/transfers" method="post" class="transfer-form">
+        <form th:action="@{/transfers}" method="post" class="transfer-form">
 
           <label for="walletId">Select Wallet</label>
           <select id="walletId" name="fromWalletId" required="">
@@ -131,6 +132,6 @@
     </div>
   </div>
 </main>
-<div class="footer"><p>© 2025 Smart Wallet. All rights reserved.</p></div>
+<th:blok th:insert="fragments/my-footer :: website-footer"></th:blok>
 
 <span id="okta-plugin-message-channel-available" style="display: none;"></span></body></html>

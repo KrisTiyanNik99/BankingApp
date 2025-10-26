@@ -21,6 +21,10 @@ public class TransactionService {
         this.transactionRepository = transactionRepository;
     }
 
+    public Transaction upsert(Transaction transaction) {
+        return transactionRepository.save(transaction);
+    }
+
     public Transaction createNewTransaction(User user, String sender, String receiver, BigDecimal amount,
                                             BigDecimal balanceLeft, Currency currency, TransactionType type,
                                             TransactionStatus status, String description, String failureReason) {

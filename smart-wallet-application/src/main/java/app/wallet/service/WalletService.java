@@ -26,6 +26,9 @@ public class WalletService {
     private static final String SMART_WALLET_PLATFORM = "SMART WALLET PLATFORM";
     private static final String TRANSACTIONAL_DESCRIPTION = "Top-up %.2f";
     private static final String INACTIVE_FAIL_TRANSACTION = "Inactive wallet";
+    private static final String NOT_ENOUGH_AMOUNT = "Not enough amount in the wallet";
+    private static final String INACTIVE_WALLET = "Wallet is inactive";
+    private static final String NOT_OWNED_WALLET = "You don't own this wallet";
 
     private final WalletRepository walletRepository;
     private final TransactionService transactionService;
@@ -34,6 +37,55 @@ public class WalletService {
     public WalletService(WalletRepository walletRepository, TransactionService transactionService) {
         this.walletRepository = walletRepository;
         this.transactionService = transactionService;
+    }
+
+    @Transactional
+    public Transaction charge(User user, UUID walletId, BigDecimal amount, String description) {
+        Wallet wallet = getWalletById(walletId);
+
+        Transaction transaction = Transaction.builder()
+                .owner(user)
+                .sender(wallet.getId().toString())
+                .receiver(SMART_WALLET_PLATFORM)
+                .amount(amount)
+                .currency(wallet.getCurrency())
+                .type(TransactionType.WITHDRAWAL)
+                .description(description)
+                .createdOn(LocalDateTime.now())
+                .build();
+
+        if (!isWalletActive(wallet)) {
+            transaction.setFailureReason(INACTIVE_WALLET);
+            transaction.setStatus(TransactionStatus.FAILED);
+        } else if (!hasSufficientFunds(wallet, amount)) {
+            transaction.setFailureReason(NOT_ENOUGH_AMOUNT);
+            transaction.setStatus(TransactionStatus.FAILED);
+        } else if (isWalletOwnedByUser(wallet, user)) {
+            transaction.setFailureReason(NOT_OWNED_WALLET);
+            transaction.setStatus(TransactionStatus.FAILED);
+        } else {
+            transaction.setStatus(TransactionStatus.SUCCEEDED);
+            wallet.setBalance(wallet.getBalance().subtract(amount));
+            wallet.setUpdatedOn(LocalDateTime.now());
+            walletRepository.save(wallet);
+        }
+
+        transaction.setBalanceLeft(wallet.getBalance());
+        return transactionService.upsert(transaction);
+    }
+
+    public boolean isWalletActive(Wallet wallet) {
+        return wallet.getStatus() == WalletStatus.ACTIVE;
+    }
+
+    public boolean isWalletOwnedByUser(Wallet wallet, User user) {
+        return wallet.getOwner().getId().equals(user.getId());
+    }
+
+    public boolean hasSufficientFunds(Wallet wallet, BigDecimal amount) {
+        BigDecimal walletAmount = wallet.getBalance();
+        BigDecimal hasAmount = amount;
+        return walletAmount.compareTo(hasAmount) > 0;
     }
 
     @Transactional

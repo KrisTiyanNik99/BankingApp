@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"><head>
   <meta charset="UTF-8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -158,7 +158,7 @@
         </div>
       </div>
 
-      <a href="/home" class="profile-actions-button">
+      <a th:href="@{/home}" class="profile-actions-button">
         <p>Go back</p>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 7H14C17.3137 7 20 9.68629 20 13C20 16.3137 17.3137 19 14 19H4M4 7L8 3M4 7L8 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -167,6 +167,6 @@
     </div>
   </div>
 </main>
-<div class="footer"><p>© 2025 Smart Wallet. All rights reserved.</p></div>
+<th:blok th:insert="fragments/my-footer :: website-footer"></th:blok>
 
 </body></html>

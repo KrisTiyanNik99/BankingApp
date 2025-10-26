@@ -23,12 +23,15 @@ public class Subscription {
     private User owner;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private SubscriptionStatus status;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private SubscriptionPeriod period;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private SubscriptionType type;
 
     @Column(nullable = false)

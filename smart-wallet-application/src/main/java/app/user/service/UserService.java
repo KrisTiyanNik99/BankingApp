@@ -5,6 +5,7 @@ import app.user.model.User;
 import app.user.model.UserRole;
 import app.user.repository.UserRepository;
 import app.wallet.service.WalletService;
+import app.web.dto.EditUserRequest;
 import app.web.dto.LoginRequest;
 import app.web.dto.RegisterRequest;
 import jakarta.transaction.Transactional;
@@ -14,9 +15,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/*
+  In service layer we need to have only business login validation. Or all rules for our application is here
+  (Can we make one operation or not). For example - can someone login - yes if username and password matches! Another
+  example - can someone have more than 3 accounts? - we check if he already has 3 accounts than no! Business rules - when
+  we allow one operation happens!
+ */
 @Slf4j
 @Service
 public class UserService {
@@ -81,12 +89,28 @@ public class UserService {
         return optionalUser.get();
     }
 
-    public User getById(UUID userId) {
+    public void editUserProfile(UUID userId, EditUserRequest editUserRequest) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("Such user does not exit!");
+            throw new RuntimeException("Such user does not exist!");
         }
 
-        return optionalUser.get();
+        User user = optionalUser.get();
+        user.setFirstName(editUserRequest.getFirstName());
+        user.setLastName(editUserRequest.getLastName());
+        user.setEmail(editUserRequest.getEmail());
+        user.setProfilePicture(editUserRequest.getProfilePicture());
+        user.setUpdatedOn(LocalDateTime.now());
+
+        userRepository.save(user);
+    }
+
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
+    public User getById(UUID userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Such user does not exist!"));
     }
 }
