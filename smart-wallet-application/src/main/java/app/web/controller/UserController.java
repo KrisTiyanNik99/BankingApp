@@ -2,16 +2,14 @@ package app.web.controller;
 
 import app.user.model.User;
 import app.user.service.UserService;
+import app.web.dto.DtoMapper;
 import app.web.dto.EditUserRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -44,21 +42,26 @@ public class UserController {
     public ModelAndView getProfilePage(HttpSession session) {
         UUID userId = (UUID) session.getAttribute(USER_SESSION_ATTRIBUTE);
         User user = userService.getById(userId);
+        EditUserRequest editUserRequest = DtoMapper.fromUser(user);
 
         ModelAndView profilePage = new ModelAndView();
         profilePage.setViewName("profile-menu");
+        profilePage.addObject("editUser", editUserRequest);
         profilePage.addObject("user", user);
-        profilePage.addObject("editUser", new EditUserRequest());
 
         return profilePage;
     }
 
-    @PostMapping("/profile")
+    @PutMapping("/profile")
     public ModelAndView editUser(@Valid EditUserRequest editedUser, BindingResult bindingResult, HttpSession session) {
         UUID userId = (UUID) session.getAttribute(USER_SESSION_ATTRIBUTE);
 
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("profile-menu");
+            User user = userService.getById(userId);
+
+            ModelAndView profilePage = new ModelAndView();
+            profilePage.setViewName("profile-menu");
+            profilePage.addObject("user", user);
         }
 
         userService.editUserProfile(userId, editedUser);

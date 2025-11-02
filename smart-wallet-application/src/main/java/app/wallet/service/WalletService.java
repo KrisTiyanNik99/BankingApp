@@ -8,6 +8,7 @@ import app.user.model.User;
 import app.wallet.model.Wallet;
 import app.wallet.model.WalletStatus;
 import app.wallet.repository.WalletRepository;
+import app.web.dto.TransferRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import java.util.UUID;
 @Service
 public class WalletService {
     private static final String NOT_EXISTED_WALLET = "Wallet with [%s] not exist.";
-
+    private static final String NO_ACTIVE_WALLET = "[%s] don't have any active wallets.";
     private static final String DEFAULT_USER_WALLET_BALANCE = "20.00";
     private static final String DEFAULT_WALLET_CURRENCY = "EUR";
     private static final String SMART_WALLET_PLATFORM = "SMART WALLET PLATFORM";
@@ -29,6 +30,7 @@ public class WalletService {
     private static final String NOT_ENOUGH_AMOUNT = "Not enough amount in the wallet";
     private static final String INACTIVE_WALLET = "Wallet is inactive";
     private static final String NOT_OWNED_WALLET = "You don't own this wallet";
+    private static final String TRANSFER_DESCRIPTION = "Transfer %s <> %s (%.2f)";
 
     private final WalletRepository walletRepository;
     private final TransactionService transactionService;
@@ -60,7 +62,7 @@ public class WalletService {
         } else if (!hasSufficientFunds(wallet, amount)) {
             transaction.setFailureReason(NOT_ENOUGH_AMOUNT);
             transaction.setStatus(TransactionStatus.FAILED);
-        } else if (isWalletOwnedByUser(wallet, user)) {
+        } else if (!isWalletOwnedByUser(wallet, user)) {
             transaction.setFailureReason(NOT_OWNED_WALLET);
             transaction.setStatus(TransactionStatus.FAILED);
         } else {
@@ -74,22 +76,8 @@ public class WalletService {
         return transactionService.upsert(transaction);
     }
 
-    public boolean isWalletActive(Wallet wallet) {
-        return wallet.getStatus() == WalletStatus.ACTIVE;
-    }
-
-    public boolean isWalletOwnedByUser(Wallet wallet, User user) {
-        return wallet.getOwner().getId().equals(user.getId());
-    }
-
-    public boolean hasSufficientFunds(Wallet wallet, BigDecimal amount) {
-        BigDecimal walletAmount = wallet.getBalance();
-        BigDecimal hasAmount = amount;
-        return walletAmount.compareTo(hasAmount) > 0;
-    }
-
     @Transactional
-    public Transaction topUp(UUID walletId, BigDecimal topUpAmount) {
+    public Transaction deposit(UUID walletId, BigDecimal topUpAmount) {
         Wallet wallet = getWalletById(walletId);
 
         // If wallet is Inactive transaction will be fail
@@ -123,6 +111,21 @@ public class WalletService {
                 null);
     }
 
+    @Transactional
+    public Transaction transfer(TransferRequest transferRequest) {
+        Wallet sender = getWalletById(transferRequest.getWalletId());
+        Wallet receiver = getFirstByUsername(transferRequest.getRecipientUsername());
+
+        String transferDescription = TRANSFER_DESCRIPTION.formatted(sender.getOwner().getUsername(),
+                receiver.getOwner().getUsername(), transferRequest.getAmount());
+        Transaction withdraw = charge(sender.getOwner(), sender.getId(), transferRequest.getAmount(), transferDescription);
+        if (withdraw.getStatus() == TransactionStatus.SUCCEEDED) {
+            deposit(receiver.getId(), transferRequest.getAmount());
+        }
+
+        return withdraw;
+    }
+
     public Wallet createNewWallet(User user) {
         Wallet newWallet = Wallet.builder()
                 .owner(user)
@@ -136,7 +139,31 @@ public class WalletService {
         return walletRepository.save(newWallet);
     }
 
+    // ##########################           Helper methods           ###########################
+    private boolean isWalletActive(Wallet wallet) {
+        return wallet.getStatus() == WalletStatus.ACTIVE;
+    }
+
+    private boolean isWalletOwnedByUser(Wallet wallet, User user) {
+        return wallet.getOwner().getId().equals(user.getId());
+    }
+
     private Wallet getWalletById(UUID walletId) {
-        return walletRepository.findById(walletId).orElseThrow(() -> new RuntimeException(NOT_EXISTED_WALLET.formatted(walletId)));
+        return walletRepository.findById(walletId)
+                .orElseThrow(() -> new RuntimeException(NOT_EXISTED_WALLET.formatted(walletId)));
+    }
+
+    private boolean hasSufficientFunds(Wallet wallet, BigDecimal amount) {
+        BigDecimal walletAmount = wallet.getBalance();
+        BigDecimal hasAmount = amount;
+        return walletAmount.compareTo(hasAmount) > 0;
+    }
+
+    private Wallet getFirstByUsername(String recipientUsername) {
+        return walletRepository.findByOwnerUsername(recipientUsername)
+                .stream()
+                .filter(this::isWalletActive)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException(NO_ACTIVE_WALLET.formatted(recipientUsername)));
     }
 }

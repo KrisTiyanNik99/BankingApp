@@ -34,7 +34,7 @@ public class HttpInterceptor implements HandlerInterceptor{
 
         HttpSession session = request.getSession(false);
         if (session == null) {
-            response.sendRedirect("/");
+            response.sendRedirect("/login");
             return false;
         }
 

@@ -1,12 +1,18 @@
 package app.web.controller;
 
+import app.subscription.model.SubscriptionType;
 import app.user.model.User;
 import app.user.service.UserService;
+import app.web.dto.UpgradeRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.UUID;
@@ -22,9 +28,14 @@ public class SubscriptionController {
     }
 
     @GetMapping
-    public ModelAndView getUpgradePage() {
+    public ModelAndView getUpgradePage(HttpSession session) {
+        UUID userId = (UUID) session.getAttribute("user_id");
+        User user = userService.getById(userId);
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("upgrade");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("upgradeRequest", new UpgradeRequest());
 
         return modelAndView;
     }
@@ -39,5 +50,12 @@ public class SubscriptionController {
         modelAndView.addObject("user", user);
 
         return modelAndView;
+    }
+
+    @PostMapping()
+    public ModelAndView upgrade(@Valid UpgradeRequest upgradeRequest, BindingResult bindingResult,
+                                @RequestParam("subscriptionType") SubscriptionType subscriptionType, HttpSession session) {
+        System.out.println();
+        return null;
     }
 }

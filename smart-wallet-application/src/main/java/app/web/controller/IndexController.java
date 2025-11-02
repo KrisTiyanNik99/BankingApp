@@ -88,4 +88,11 @@ public class IndexController {
 
         return homeModelAndView;
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+
+        return "redirect:/";
+    }
 }

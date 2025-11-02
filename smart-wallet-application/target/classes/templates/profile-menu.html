@@ -128,7 +128,7 @@
       </div>
 
       <!--------   ################       Edit user profile info form       ################   -------->
-      <form class="form" th:action="@{/users/profile}" th:method="post" th:object="${editUser}">
+      <form class="form" th:action="@{/users/profile}" th:method="put" th:object="${editUser}">
         <label for="firstName">First Name</label>
         <input type="text" id="firstName" placeholder="First Name" th:field="*{firstName}">
         <p class="alert_warning" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
