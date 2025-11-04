@@ -18,5 +18,4 @@ public class UpgradeRequest {
 
     @NotNull
     private UUID walletId;
-
 }

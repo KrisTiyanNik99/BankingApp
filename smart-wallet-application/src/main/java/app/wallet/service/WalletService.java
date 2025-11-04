@@ -139,6 +139,7 @@ public class WalletService {
         return walletRepository.save(newWallet);
     }
 
+
     // ##########################           Helper methods           ###########################
     private boolean isWalletActive(Wallet wallet) {
         return wallet.getStatus() == WalletStatus.ACTIVE;
